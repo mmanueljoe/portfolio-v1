@@ -66,3 +66,24 @@
   --on-surface-alt: #f2ebd9; /* parchment-200 */
   --on-surface-alt-muted: #8a7a60; /* parchment-800 */
 }
+
+@layer base {
+  body {
+    @apply bg-surface text-on-surface font-body;
+  }
+
+  ::selection {
+    @apply bg-gold-200 text-ink-900;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Honour visitors who ask the OS to reduce motion. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}
