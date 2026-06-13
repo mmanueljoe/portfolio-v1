@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+/* next-themes toggles `.dark` on <html>; wiring the variant now so sections
+   built before the toggle (step 4) already resolve. ADR-008. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Tailwind v4 configures tokens in CSS, not a config file (ADR-004). Inline
+   labels map each hex to its design-system palette name. */
+@theme {
+  --color-ink-50: #f5f3f0;
+  --color-ink-100: #e0ddd8;
+  --color-ink-200: #b8b4ae;
+  --color-ink-400: #888480;
+  --color-ink-600: #555250;
+  --color-ink-800: #2e2c2a;
+  --color-ink-900: #1a1a18;
+
+  --color-parchment-50: #fdfbf7;
+  --color-parchment-100: #faf6ee;
+  --color-parchment-200: #f2ebd9;
+  --color-parchment-300: #e8dfc8;
+  --color-parchment-400: #d8cdb0;
+  --color-parchment-600: #c0b090;
+  --color-parchment-800: #8a7a60;
+
+  --color-gold-50: #fdf4e8;
+  --color-gold-100: #f5dfb0;
+  --color-gold-200: #e8c070;
+  --color-gold-400: #d4a853;
+  --color-gold-600: #c8924a;
+  --color-gold-800: #a06a28;
+  --color-gold-900: #704a18;
+
+  /* Set by next/font in layout.tsx (step 2); fall back until then. */
+  --font-display: var(--font-dm-sans), sans-serif;
+  --font-body: var(--font-inter), sans-serif;
+}
+
+/* Semantic surface roles. Sections name these, never raw palette colors, so the
+   light/dark section rhythm survives a user theme toggle. ADR-008. */
+@theme inline {
+  --color-surface: var(--surface);
+  --color-on-surface: var(--on-surface);
+  --color-on-surface-muted: var(--on-surface-muted);
+  --color-surface-alt: var(--surface-alt);
+  --color-on-surface-alt: var(--on-surface-alt);
+  --color-on-surface-alt-muted: var(--on-surface-alt-muted);
+}
+
+:root {
+  --surface: #faf6ee; /* parchment-100 */
+  --on-surface: #1a1a18; /* ink-900 */
+  --on-surface-muted: #555250; /* ink-600 */
+  --surface-alt: #1a1a18; /* ink-900 */
+  --on-surface-alt: #f2ebd9; /* parchment-200 */
+  --on-surface-alt-muted: #8a7a60; /* parchment-800 */
+}
+
+/* Dark keeps the rhythm in a dark register: surface-alt is an elevation step
+   above surface (ink-800 over ink-900), not a flip back to light. */
+.dark {
+  --surface: #1a1a18; /* ink-900 */
+  --on-surface: #f2ebd9; /* parchment-200 */
+  --on-surface-muted: #8a7a60; /* parchment-800 */
+  --surface-alt: #2e2c2a; /* ink-800 */
+  --on-surface-alt: #f2ebd9; /* parchment-200 */
+  --on-surface-alt-muted: #8a7a60; /* parchment-800 */
+}
