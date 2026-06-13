@@ -1,36 +1,96 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Emmanuel Joe Benson — Portfolio
 
-## Getting Started
+A minimal, typographic personal portfolio built to a precise design system.
+Single scrolling page plus an MDX blog. Production-grade by intent, not a template.
 
-First, run the development server:
+> **Status:** in active development, built section by section per
+> [`docs/project-brief.md`](docs/project-brief.md). Not all build steps below are
+> wired yet — the dependency list reflects what's installed today.
+
+---
+
+## Stack
+
+| Area | Choice | Notes |
+|---|---|---|
+| Framework | Next.js 16 (App Router, Turbopack) | Server Components by default |
+| UI | React 19 + React Compiler | auto-memoization; avoid manual `useMemo`/`useCallback` |
+| Language | TypeScript (strict) | no `any` |
+| Styling | Tailwind CSS v4 | CSS-first config in `globals.css`, no `tailwind.config.js` |
+| Fonts | DM Sans + Inter | self-hosted via `next/font` |
+| Lint + format | Biome | one tool, replaces ESLint + Prettier |
+| Git hooks | husky + lint-staged + commitlint | format staged files, enforce Conventional Commits |
+| Blog _(planned)_ | `@next/mdx` | local MDX in `content/blog/` |
+| Animation _(planned)_ | `motion` | added last |
+
+Every choice has a recorded rationale in [`docs/decisions.md`](docs/decisions.md)
+(ADR-001 to ADR-009). Read it before changing any of them.
+
+---
+
+## Getting started
+
+**Prerequisites:** Node.js 20.9+ (developed on 24) and **pnpm 10+**. This repo is
+pnpm-only — `npm` or `yarn` will create a second lockfile, which is a bug (ADR-001).
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Script | Does |
+|---|---|
+| `pnpm dev` | start the dev server (Turbopack) |
+| `pnpm build` | production build |
+| `pnpm start` | serve the production build |
+| `pnpm lint` | Biome check (lint + format diff) |
+| `pnpm format` | Biome write (apply formatting) |
 
-## Learn More
+Git hooks install automatically on `pnpm install` (via the `prepare` script):
+the pre-commit hook runs Biome on staged files, and the commit-msg hook enforces
+Conventional Commits.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+content/blog/   MDX blog posts (one file per post)
+docs/           project brief, architecture, standards, design system, ADRs
+public/         static assets and project mockups
+src/app/        App Router pages + globals.css
+src/components/ layout, sections, ui, blog
+src/lib/        MDX reading utilities
+src/types/      shared types
+```
 
-## Deploy on Vercel
+Full folder rules: [`docs/architecture.md`](docs/architecture.md).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Conventions
+
+- **Design tokens only** — no arbitrary Tailwind values (`text-gold-600`, never
+  `text-[#C8924A]`). Palette and semantic surface tokens live in `globals.css`.
+- **Commits** follow Conventional Commits (`feat(scope): …`), checked by commitlint.
+- The full rule set lives in [`docs/coding-standards.md`](docs/coding-standards.md)
+  and [`docs/design-system.md`](docs/design-system.md).
+
+---
+
+## Deployment
+
+Targets [Vercel](https://vercel.com) (build step 14, not yet live). Once set up,
+pushes to `main` trigger a build — no separate CI is configured (see ADR-009).
+
+---
+
+## Author
+
+**Emmanuel Joe Benson** — Software Engineer
+[GitHub](https://github.com/mmanueljoe) ·
+[LinkedIn](https://linkedin.com/in/emmanuel-letsu)
