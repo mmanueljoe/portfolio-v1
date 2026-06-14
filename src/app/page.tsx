@@ -1,9 +1,9 @@
+import { HeroSection } from "@/components/sections/HeroSection";
+
 export default function Home() {
   return (
-    <main className="flex min-h-screen items-center justify-center">
-      <p className="text-sm text-on-surface-muted">
-        Portfolio scaffold ready — sections coming next.
-      </p>
+    <main className="flex-1">
+      <HeroSection />
     </main>
   );
 }
