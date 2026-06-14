@@ -1,3 +1,4 @@
+import { AboutSection } from "@/components/sections/AboutSection";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { ProjectsSection } from "@/components/sections/ProjectsSection";
 
@@ -6,6 +7,7 @@ export default function Home() {
     <main className="flex-1">
       <HeroSection />
       <ProjectsSection />
+      <AboutSection />
     </main>
   );
 }

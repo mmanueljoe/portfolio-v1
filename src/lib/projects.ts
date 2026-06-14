@@ -4,7 +4,7 @@ export const PROJECTS: Project[] = [
   {
     title: "Earned Wage Access",
     kicker: "Fintech",
-    line: "Access to wages already earned, before payday — over USSD for basic phones, with an employer dashboard and an AI payslip processor.",
+    line: "Access to wages already earned, before payday. Over USSD for basic phones, with an employer dashboard and an AI payslip processor.",
     stack: ["Next.js", "TypeScript", "PostgreSQL", "Moolre API"],
     meta: "In active development",
   },
@@ -18,7 +18,7 @@ export const PROJECTS: Project[] = [
   {
     title: "Kanban Task Manager",
     kicker: "Experiment",
-    line: "One board, built three times — Context, then Redux, then Zustand — to feel the state-management tradeoffs first-hand.",
+    line: "One board, built three times (Context, then Redux, then Zustand) to feel the state-management tradeoffs first-hand.",
     stack: ["React", "TypeScript", "Zustand"],
     meta: "Personal project",
     repoHref: "https://github.com/mmanueljoe/kanban-task-manager-zustand",

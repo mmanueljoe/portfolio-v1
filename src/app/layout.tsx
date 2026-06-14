@@ -17,7 +17,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Emmanuel Joe Benson — Software Engineer",
+  title: "Emmanuel Joe Benson · Software Engineer",
   description:
     "Software engineer building full-stack web applications, from the API to the interface.",
 };

@@ -41,7 +41,7 @@ export function ProjectScene({ project, index }: Readonly<ProjectSceneProps>) {
         ) : (
           <div className="flex aspect-video w-full items-center justify-center rounded-xl border border-on-surface/10 bg-surface-alt">
             <span className="font-body text-xs text-on-surface-alt-muted">
-              {title} — mockup
+              {title} · mockup
             </span>
           </div>
         )}
