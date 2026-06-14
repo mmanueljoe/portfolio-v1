@@ -6,6 +6,39 @@ Never hardcode a value that exists in this document.
 
 ---
 
+## Design Principles
+
+The north star for every visual decision: **Apple's discipline, warmed up** —
+Apple's focus, space, and restraint applied to a warm, literary palette instead
+of a cold, clinical one. When a section decision is unclear, it obeys these five
+before anything else. See ADR-010 for why.
+
+1. **Reduce until only the essential is left.** Each section does exactly one
+   job. If an element isn't carrying its weight, remove it — don't shrink it.
+
+2. **Space is a material, not emptiness.** Whitespace is placed deliberately.
+   Don't fill the page; the calm *is* the design, and it reads as confidence.
+
+3. **Hierarchy from scale, not decoration.** Importance comes from size and
+   weight — never from boxes, borders, or badges. The type carries the page.
+
+4. **The design defers to the content.** The parchment surface is a quiet stage;
+   the work and the writing are the stars. The UI never shows off over them.
+
+5. **Say little, confidently.** Short, declarative copy. This is the one place we
+   soften Apple — keep Emmanuel's reflective, human voice, just tighter. State,
+   don't oversell.
+
+**The cost:** minimalism is unforgiving. With less on screen, every remaining
+element must be precise — spacing rhythm, alignment, type. Minimal is not less
+work; it is less stuff, executed more carefully.
+
+**What we deliberately do NOT take from Apple:** cinematic scroll-jacking and
+marketing-speak. A visitor skims in ~30 seconds — the site stays fast, scannable,
+and honest in voice.
+
+---
+
 ## Colour Palette
 
 Three colour families. Everything is built from these.
@@ -60,39 +93,30 @@ Never use gold as a background. Never on multiple elements at once.
 
 ## Light Mode vs Dark Mode
 
-Dark mode is a **user-switchable theme** (toggle in the nav), not a fixed design
-device. See ADR-008 in `docs/decisions.md` for the full rationale and the
-Tailwind v4 wiring; this section is the visual reference for what the tokens
-resolve to.
+Dark mode is a **user-switchable theme** (toggle in the nav). See ADR-008 for the
+toggle wiring and ADR-010 for why sections no longer alternate.
 
-The trick: the site's section rhythm (alternating light/dark backgrounds) and a
-user dark-mode toggle both want the same light↔dark axis. If you naively invert
-each section, the page flips light-dark-dark-light and never actually gets
-*darker*. We resolve that by alternating on a **semantic surface layer** instead
-of raw palette colors, then theming those roles per mode.
+**Every section sits on a single shared surface.** Per the design principles (one
+calm surface, no competing bands), sections all use `bg-surface` /
+`text-on-surface` — there is no light/dark alternation between them. The page
+reads as one continuous warm field; separation comes from space and hairline
+rules, not background blocks.
 
-Sections name **roles**, never raw palette colors:
+The semantic roles still exist and resolve per mode:
 
-- A light-today section uses `bg-surface` / `text-on-surface` (+ `text-on-surface-muted`).
-- A dark-today section uses `bg-surface-alt` / `text-on-surface-alt` (+ `text-on-surface-alt-muted`).
+| Role | Light mode | Dark mode | Used for |
+|---|---|---|---|
+| `surface` | `parchment-100` `#FAF6EE` | `ink-900` `#1A1A18` | every section background |
+| `on-surface` | `ink-900` `#1A1A18` | `parchment-200` `#F2EBD9` | primary text |
+| `on-surface-muted` | `ink-600` `#555250` | `parchment-800` `#8A7A60` | secondary text |
+| `surface-alt` | `parchment-300` `#E8DFC8` | `ink-800` `#2E2C2A` | subtle elevation only |
+| `on-surface-alt` | `ink-900` `#1A1A18` | `parchment-200` `#F2EBD9` | text on elevated surfaces |
+| `on-surface-alt-muted` | `ink-600` `#555250` | `parchment-800` `#8A7A60` | muted text on elevated surfaces |
 
-Each mode defines what those roles resolve to. Dark mode is the *same rhythm in a
-dark key* — `surface-alt` is a small **elevation** step above `surface`, not a
-flip back to light.
-
-| Role | Light mode | Dark mode |
-|---|---|---|
-| `surface` | `parchment-100` `#FAF6EE` | `ink-900` `#1A1A18` |
-| `on-surface` | `ink-900` `#1A1A18` | `parchment-200` `#F2EBD9` |
-| `on-surface-muted` | `ink-600` `#555250` | `parchment-800` `#8A7A60` |
-| `surface-alt` | `ink-900` `#1A1A18` | `ink-800` `#2E2C2A` |
-| `on-surface-alt` | `parchment-200` `#F2EBD9` | `parchment-200` `#F2EBD9` |
-| `on-surface-alt-muted` | `parchment-800` `#8A7A60` | `parchment-800` `#8A7A60` |
-
-**`gold-600` is mode-independent** — the brand accent stays constant in both
-modes (it already reads on parchment and on ink). The raw palette tokens
-(`ink-900`, `parchment-100`, …) still exist for one-off uses, but section
-backgrounds and their text must use the semantic roles above.
+`surface-alt` is now an **elevation** token for small raised elements (a card, the
+nav glass on scroll, the footer, mockup frames) — *not* a full-section band.
+`gold-600` stays constant across both modes. Raw palette tokens still exist for
+one-off uses, but section backgrounds and their text use the semantic roles above.
 
 ---
 
@@ -156,7 +180,7 @@ Projects section: `grid-cols-1 md:grid-cols-3 gap-8`
   `background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' stitchTiles='stitch'/></filter><rect width='200' height='200' filter='url(%23n)' opacity='0.4'/></svg>")`,
   `opacity: 0.03`, `pointer-events: none`, `position: absolute`, `inset: 0`.
   Parchment sections only, never on ink sections.
-- **Glassmorphism** — nav bar on scroll only. `backdrop-blur`, `parchment-200` at 80% opacity, subtle bottom border. One place. Nowhere else.
+- **Glassmorphism** — the centered floating nav pill only. `backdrop-blur`, `surface` at 80% opacity, hairline border. One place. Nowhere else.
 - **Alignment is everything.** Everything on a grid. Nothing floating.
 - **One focal point per section.** One heading. One CTA. One accent. Hierarchy, not noise.
 

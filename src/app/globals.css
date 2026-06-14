@@ -36,8 +36,8 @@
   --font-body: var(--font-inter), sans-serif;
 }
 
-/* Semantic surface roles. Sections name these, never raw palette colors, so the
-   light/dark section rhythm survives a user theme toggle. ADR-008. */
+/* Semantic surface roles. Sections use surface/on-surface (one calm surface, no
+   alternation); surface-alt is for subtle elevation only. ADR-008, ADR-010. */
 @theme inline {
   --color-surface: var(--surface);
   --color-on-surface: var(--on-surface);
@@ -51,13 +51,13 @@
   --surface: #faf6ee; /* parchment-100 */
   --on-surface: #1a1a18; /* ink-900 */
   --on-surface-muted: #555250; /* ink-600 */
-  --surface-alt: #1a1a18; /* ink-900 */
-  --on-surface-alt: #f2ebd9; /* parchment-200 */
-  --on-surface-alt-muted: #8a7a60; /* parchment-800 */
+  --surface-alt: #e8dfc8; /* parchment-300 — subtle elevation */
+  --on-surface-alt: #1a1a18; /* ink-900 */
+  --on-surface-alt-muted: #555250; /* ink-600 */
 }
 
-/* Dark keeps the rhythm in a dark register: surface-alt is an elevation step
-   above surface (ink-800 over ink-900), not a flip back to light. */
+/* Dark mode. surface-alt is a subtle elevation over surface (ink-800 over
+   ink-900; parchment-300 over parchment-100 in light). ADR-010. */
 .dark {
   --surface: #1a1a18; /* ink-900 */
   --on-surface: #f2ebd9; /* parchment-200 */
@@ -78,6 +78,8 @@
 
   html {
     scroll-behavior: smooth;
+    /* clear the floating nav pill when jumping to an anchor */
+    scroll-padding-top: 5rem;
   }
 
   /* Honour visitors who ask the OS to reduce motion. */

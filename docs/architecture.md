@@ -131,28 +131,26 @@ export function ProjectCard({ title, description, stack, githubUrl, mockupSrc }:
 
 ---
 
-## Section Alternation Pattern
+## Section Backgrounds
 
-Sections alternate backgrounds for visual rhythm. They name **semantic surface
-roles**, never raw palette colors — this is what lets the alternation coexist
-with a user dark-mode toggle (see ADR-008 in `docs/decisions.md`, and the role
-table in `docs/design-system.md`).
+Every section sits on the **single shared surface** — `bg-surface` /
+`text-on-surface`. There is no light/dark alternation between sections (dropped in
+ADR-010). The page is one continuous warm field; sections are separated by
+generous vertical space and, where needed, a hairline rule — never by background
+color blocks.
 
 ```
-Hero        → bg-surface      text-on-surface      (light-today)
-About       → bg-surface-alt  text-on-surface-alt  (dark-today)
-Skills      → bg-surface      text-on-surface      (light-today)
-Projects    → bg-surface-alt  text-on-surface-alt  (dark-today)
-Contact     → bg-surface      text-on-surface      (light-today)
+Hero        → bg-surface  text-on-surface
+Projects    → bg-surface  text-on-surface
+About       → bg-surface  text-on-surface
+Skills      → bg-surface  text-on-surface
+Contact     → bg-surface  text-on-surface
 ```
 
-In **light mode** these resolve to the original parchment/ink rhythm. In **dark
-mode** they resolve to a dark key (`ink-900` base, `ink-800` elevation for the
-`-alt` sections) — same alternation, never a flip back to light.
-
-Do **not** hard-code `bg-parchment-100` / `bg-ink-900` on sections. Each section
-handles its own background using the semantic classes; the page file just stacks
-them.
+`surface-alt` is reserved for small raised elements (nav glass on scroll, footer,
+mockup frames), not section bands. Do **not** hard-code `bg-parchment-100` /
+`bg-ink-900` on sections — use the semantic classes. The page file just stacks the
+sections.
 
 ---
 

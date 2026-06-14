@@ -373,3 +373,63 @@ stays fast as the repo grows.
 - Anyone cloning the repo gets the hooks automatically via the `prepare` script on
   their first `pnpm install`.
 - husky's `.husky/_/` internals are self-gitignored; our two hook files are tracked.
+
+---
+
+## ADR-010 — Design direction: Apple's discipline, warmed up
+
+- **Date:** 2026-06-14
+- **Status:** Accepted — supersedes the **section-alternation** decision in ADR-008
+  (the dark-mode *toggle* from ADR-008 stays). Updates `design-system.md`
+  "Light Mode vs Dark Mode" and `architecture.md` "Section Backgrounds".
+
+**Context.** The original docs styled the page as alternating light/dark section
+bands. Two problems surfaced once we had a real dark-mode toggle: (1) a dark band
+in light mode now reads as *"is my theme half-broken?"* — the alternation and the
+toggle fight for the same axis; and (2) alternating-color-bands is what most
+portfolios do — it's generic. Emmanuel wanted something original but was clear it
+should stay on his established vibe: warm, quiet, literary, typographic. We worked
+the question by digesting Apple's design philosophy and adapting it.
+
+**Decision.** Adopt a single design north star — **Apple's discipline, warmed
+up** — codified as five **Design Principles** (see `design-system.md`): reduce to
+essentials, space as a material, hierarchy from scale, design defers to content,
+say little confidently. Concretely:
+
+- **One calm surface.** Every section uses `bg-surface` / `text-on-surface`. No
+  alternation. Separation comes from space and hairline rules, not color blocks.
+- **Projects as Apple-style scenes.** One project per full-focus scene — big name,
+  one or two declarative lines, a large mockup, a single gold `View project →`
+  link, lots of air — instead of a dense card grid or stacked rows.
+- **`surface-alt` demoted** from a dark section band to a subtle *elevation* token
+  (light: `parchment-300`; dark: `ink-800`) for small raised elements (nav glass,
+  footer, mockup frames).
+
+**Why.** The warm-and-quiet vibe Emmanuel designed is rarer and stronger than the
+generic dark-portfolio template, and it matches his self-description (careful,
+considered). Apple's restraint executed precisely *is* the impressive part —
+spectacle would fight the room. Warmth supplies the humanity Apple lacks.
+
+**Alternatives rejected.**
+- *Keep full alternation* — generic, and collides with the toggle.
+- *Interactive "live tradeoff" kanban showpiece* (toggle Context/Redux/Zustand,
+  watch re-renders) — genuinely original, but too loud for a quiet literary site,
+  bends the "not a web app" rule, and is over-engineered for the vibe. Parked, not
+  deleted; could resurface as a single restrained detail later.
+- *Look like the portfolios "out there"* — explicitly rejected; matching the
+  template undercuts the "I take craft seriously" message. We borrow only the
+  *usability* conventions (scannable, fast, projects/skills/contact obvious), not
+  the aesthetics.
+
+**Consequences.**
+- **Project copy must be trimmed** to one or two lines per scene; the full
+  write-ups move behind the `View project →` link (the repo for Kanban; a small
+  per-project page for EWA/Amalitech, to be specced later).
+- **`globals.css` token values change**: `--surface-alt` (and its `on-` pair) move
+  from the old dark-band values to the elevation values above. To be applied in
+  the Hero/Projects rebuild.
+- **Hero and Projects already built get refactored** onto the single-surface,
+  Apple-scene model. The semantic tokens stay, but sections collapse to
+  `surface` / `on-surface`.
+- The five principles become the tie-breaker for every later section: *does this
+  obey them?*

@@ -27,11 +27,13 @@ yoursite.com/blog/[slug]  → individual blog post
 
 ## Navigation
 
-- **Left:** Emmanuel Joe Benson (name as wordmark, links to top)
-- **Right links:** About · Skills · Projects · Blog · Contact
-- Sticky on scroll
-- On scroll: glass effect — `backdrop-blur`, `parchment-200` at 80% opacity, subtle bottom border
-- Mobile: hamburger or slide-in drawer
+- **Centered floating pill** ("island") — a rounded glass nav floating top-centre,
+  reinforcing the page's centred spine (ADR-010). Glass always (`backdrop-blur`,
+  `surface` at 80%, hairline border), since it floats over content.
+- **Monogram** `EJB` on the left (links to top); the full wordmark lives in the Hero.
+- **Links:** About · Skills · Projects · Blog · Contact, plus the theme toggle.
+- **Mobile:** the pill itself expands downward into a stacked menu on tap, then
+  collapses — the island used functionally, not as a separate drawer.
 
 ---
 
