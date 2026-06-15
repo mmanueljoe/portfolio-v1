@@ -1,3 +1,4 @@
+import { Reveal } from "@/components/ui/Reveal";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 
 const SKILL_GROUPS = [
@@ -52,7 +53,7 @@ const SKILL_GROUPS = [
 export function SkillsSection() {
   return (
     <section id="skills" className="bg-surface py-24">
-      <div className="mx-auto w-full max-w-4xl px-6">
+      <Reveal className="mx-auto w-full max-w-4xl px-6">
         <SectionLabel>Skills</SectionLabel>
 
         <dl className="mt-12 flex flex-col divide-y divide-on-surface/10">
@@ -70,7 +71,7 @@ export function SkillsSection() {
             </div>
           ))}
         </dl>
-      </div>
+      </Reveal>
     </section>
   );
 }

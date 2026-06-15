@@ -1,9 +1,10 @@
+import { Reveal } from "@/components/ui/Reveal";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 
 export function AboutSection() {
   return (
     <section id="about" className="bg-surface py-24">
-      <div className="mx-auto w-full max-w-2xl px-6">
+      <Reveal className="mx-auto w-full max-w-2xl px-6">
         <SectionLabel>About</SectionLabel>
 
         <div className="mt-8 flex flex-col gap-6 font-body text-md leading-relaxed text-on-surface text-justify hyphens-auto">
@@ -40,7 +41,7 @@ export function AboutSection() {
             it next.
           </p>
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }

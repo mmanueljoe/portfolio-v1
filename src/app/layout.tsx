@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Sans, Inter } from "next/font/google";
 import { Nav } from "@/components/layout/Nav";
+import { ScrollProgress } from "@/components/layout/ScrollProgress";
 import { Providers } from "./providers";
 import "./globals.css";
 
@@ -35,6 +36,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <Providers>
+          <ScrollProgress />
           <Nav />
           {children}
         </Providers>

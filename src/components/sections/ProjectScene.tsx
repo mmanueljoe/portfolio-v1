@@ -1,3 +1,6 @@
+"use client";
+
+import { motion, useReducedMotion } from "motion/react";
 import Image from "next/image";
 import type { Project } from "@/types";
 
@@ -11,6 +14,10 @@ export function ProjectScene({ project, index }: Readonly<ProjectSceneProps>) {
     project;
   const number = String(index + 1).padStart(2, "0");
   const projectHref = liveHref ?? repoHref;
+  const reduceMotion = useReducedMotion();
+  // A small lift on hover — enough to register as interactive, not enough to
+  // distract. Suppressed when the visitor has asked the OS to reduce motion.
+  const lift = reduceMotion ? undefined : { y: -6 };
 
   return (
     <article className="flex flex-col items-center text-center">
@@ -27,9 +34,13 @@ export function ProjectScene({ project, index }: Readonly<ProjectSceneProps>) {
         {stack.join(" · ")}
       </p>
 
-      <div className="mt-10 w-full max-w-3xl">
+      <motion.div
+        className="mt-10 w-full max-w-3xl"
+        whileHover={lift}
+        transition={{ duration: 0.3, ease: "easeOut" }}
+      >
         {mockupSrc ? (
-          <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-on-surface/10 bg-surface-alt">
+          <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-on-surface/10 bg-surface-alt shadow-sm transition-shadow hover:shadow-xl">
             <Image
               src={mockupSrc}
               alt={`${title} preview`}
@@ -39,13 +50,13 @@ export function ProjectScene({ project, index }: Readonly<ProjectSceneProps>) {
             />
           </div>
         ) : (
-          <div className="flex aspect-video w-full items-center justify-center rounded-xl border border-on-surface/10 bg-surface-alt">
+          <div className="flex aspect-video w-full items-center justify-center rounded-xl border border-on-surface/10 bg-surface-alt shadow-sm transition-shadow hover:shadow-xl">
             <span className="font-body text-xs text-on-surface-alt-muted">
               {title} · mockup
             </span>
           </div>
         )}
-      </div>
+      </motion.div>
 
       <div className="mt-6 flex items-center gap-4 font-body text-sm">
         {meta && <span className="text-on-surface-muted">{meta}</span>}

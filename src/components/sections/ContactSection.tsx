@@ -1,3 +1,4 @@
+import { Reveal } from "@/components/ui/Reveal";
 import { SectionLabel } from "@/components/ui/SectionLabel";
 
 const CONTACTS = [
@@ -21,7 +22,7 @@ const CONTACTS = [
 export function ContactSection() {
   return (
     <section id="contact" className="bg-surface py-24">
-      <div className="mx-auto flex w-full max-w-2xl flex-col items-center px-6 text-center">
+      <Reveal className="mx-auto flex w-full max-w-2xl flex-col items-center px-6 text-center">
         <SectionLabel>Contact</SectionLabel>
         <h2 className="mt-5 font-display text-4xl font-bold tracking-tight text-on-surface">
           Get in touch
@@ -45,7 +46,7 @@ export function ContactSection() {
             </a>
           ))}
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }
