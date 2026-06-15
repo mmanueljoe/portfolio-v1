@@ -329,6 +329,45 @@ icons and let CSS pick — pure CSS, no client-only gap, no layout shift:
 
 ---
 
+## ADR-011 — Blog frontmatter: `gray-matter` + `remark-frontmatter`
+
+- **Date:** 2026-06-14
+- **Status:** Accepted — resolves the open follow-up in ADR-007.
+
+**Context.** `@next/mdx` renders a post by *importing* the `.mdx` module, and it
+does not parse YAML frontmatter on its own. We need two things: (a) the `---` block
+kept out of the rendered body, and (b) the title/date/description available as data
+for the listing page and the post header. We also build with **Turbopack**, which
+only accepts MDX plugins passed as **strings** (functions can't cross into Rust).
+
+**Decision.** Keep YAML `---` frontmatter in each post. In `next.config.ts`, pass
+**`remark-frontmatter`** as a string remark plugin, so the block is parsed and never
+rendered. In `lib/blog.ts`, read the same block with **`gray-matter`** (`fs` +
+`matter`) for `getAllPosts()` and `getPostBySlug()`.
+
+**Why.** Neither tool suffices alone here: `gray-matter` can't stop `@next/mdx` from
+rendering the `---` (it renders by import, not from a string we could pre-strip), and
+`remark-frontmatter` strips the block but doesn't hand us the values in JS. Together,
+remark-frontmatter strips and gray-matter reads. Both are tiny and standard, and the
+string-plugin form is mandatory for Turbopack.
+
+**Alternatives rejected.**
+- *`remark-mdx-frontmatter`* (exposes frontmatter as a module export) — would avoid
+  gray-matter, but then the listing has to import and compile every post module just
+  to read metadata; gray-matter reads raw files directly, simpler.
+- *`export const metadata` in each MDX (no YAML)* — dependency-free, but drops the
+  conventional YAML format the brief uses and puts JS into content files.
+
+**Consequences.**
+- Posts live in `content/blog/*.mdx` (root) with `---` title/date/description. A
+  `@/content/*` → `./content/*` tsconfig path lets the `[slug]` route's dynamic
+  `import("@/content/blog/<slug>.mdx")` resolve.
+- Reading time is computed from word count in `getPostBySlug`.
+- New deps: `@next/mdx`, `@mdx-js/loader`, `@mdx-js/react`, `remark-frontmatter`,
+  `gray-matter`, and `@tailwindcss/typography` (blog body, loaded via `@plugin`).
+
+---
+
 ## ADR-009 — Git hooks: husky + lint-staged + commitlint
 
 - **Date:** 2026-06-13

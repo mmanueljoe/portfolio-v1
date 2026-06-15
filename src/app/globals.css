@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 /* next-themes toggles `.dark` on <html>; wiring the variant now so sections
    built before the toggle (step 4) already resolve. ADR-008. */

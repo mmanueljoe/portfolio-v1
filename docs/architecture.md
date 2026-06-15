@@ -176,9 +176,10 @@ Rendering uses `@next/mdx` (see ADR-007 in `docs/decisions.md`). Posts are local
 MDX modules imported per route and prerendered with `generateStaticParams` — no
 runtime fetch, no remote loader.
 
-Note: `@next/mdx` does not parse frontmatter on its own. How `lib/blog.ts` reads
-the title/date/description block is an open decision to settle before building the
-blog (brief step 10) — it will get its own ADR.
+Frontmatter is handled per ADR-011: `remark-frontmatter` (passed as a string, for
+Turbopack) keeps the `---` block out of the rendered body, and `gray-matter` reads
+the title/date/description in `lib/blog.ts`. Posts live in `content/blog/*.mdx`,
+resolved by a `@/content/*` tsconfig path.
 
 ---
 

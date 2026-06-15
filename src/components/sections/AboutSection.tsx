@@ -6,7 +6,7 @@ export function AboutSection() {
       <div className="mx-auto w-full max-w-2xl px-6">
         <SectionLabel>About</SectionLabel>
 
-        <div className="mt-8 flex flex-col gap-6 font-body text-lg leading-relaxed text-on-surface text-justify hyphens-auto">
+        <div className="mt-8 flex flex-col gap-6 font-body text-md leading-relaxed text-on-surface text-justify hyphens-auto">
           <p>
             I'm a software engineer with a particular way of working. Careful,
             systems-oriented, and always thinking about the person on the other

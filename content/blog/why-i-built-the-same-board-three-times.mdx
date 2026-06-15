@@ -1,0 +1,21 @@
+---
+title: "Why I built the same board three times"
+date: "2026-06-10"
+description: "Building one kanban app in Context, Redux, and Zustand, and what it taught me about choosing state management."
+---
+
+Most developers build a kanban board once. I built mine three times, on purpose.
+
+The first version used the Context API. The second used Redux. The third used Zustand. Same product, same features, same components. The only thing I changed each time was how state moved through the app.
+
+## The point was never the board
+
+I wasn't trying to ship a task manager. I was trying to feel the tradeoffs in my hands instead of reading about them in a comparison table. It is one thing to know that Context re-renders every consumer when the value changes. It is another to watch the whole board flicker while you drag a single card.
+
+Context was the simplest to wire and the first to strain. Redux gave me precise, predictable updates, but the ceremony was heavy for a project this size. Zustand landed in the middle I actually wanted: selective updates with almost none of the boilerplate.
+
+## What I actually learned
+
+The lesson was not "Zustand wins." It was that the right answer depends entirely on the shape of the problem, and the only way to know the shape is to build it. Tradeoffs you have only read about stay abstract. Tradeoffs you have lived become judgement.
+
+That is the approach I bring to most things now. Understand it by building it, then choose with reasons instead of habits.
