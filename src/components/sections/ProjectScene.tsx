@@ -15,8 +15,6 @@ export function ProjectScene({ project, index }: Readonly<ProjectSceneProps>) {
   const number = String(index + 1).padStart(2, "0");
   const projectHref = liveHref ?? repoHref;
   const reduceMotion = useReducedMotion();
-  // A small lift on hover — enough to register as interactive, not enough to
-  // distract. Suppressed when the visitor has asked the OS to reduce motion.
   const lift = reduceMotion ? undefined : { y: -6 };
 
   return (

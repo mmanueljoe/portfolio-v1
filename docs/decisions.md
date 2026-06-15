@@ -472,3 +472,68 @@ spectacle would fight the room. Warmth supplies the humanity Apple lacks.
   `surface` / `on-surface`.
 - The five principles become the tie-breaker for every later section: *does this
   obey them?*
+
+---
+
+## ADR-012 — Motion: two reveal primitives, reduced-motion as a first-class branch
+
+- **Date:** 2026-06-15
+- **Status:** Accepted — implements brief step 12 and the "Animation Rules" section
+  of `architecture.md`. Installs `motion` per ADR-006.
+
+**Context.** The static site was complete (steps 1–11). The brief defers animation
+to the very last build step and the design north star (ADR-010, "Apple's discipline,
+warmed up") wants motion as quiet polish, not spectacle. `architecture.md` allows
+exactly three things — scroll entrance fades, hover transitions, and a scroll
+progress bar — and forbids looping/bouncing motion and any animation that shifts
+layout or blocks reading. Sections are Server Components; `motion` needs the client.
+
+**Decision.** Add `motion@12` and express all animation through three small Client
+Component primitives, so the sections stay otherwise server-rendered and each
+animation wraps *only* the element it animates (never the `<section>` band):
+
+- **`ui/Reveal`** — a `motion.div` that fades up (`opacity 0→1`, `y 16→0`) the first
+  time it scrolls into view (`whileInView` + `viewport={{ once: true }}`). Used to
+  wrap the content block of Projects (label + each scene), About, Skills, Contact,
+  and the blog listing.
+- **`ui/Stagger` + `StaggerItem`** — a variants container that sequences its
+  children on **mount** (not scroll), for the hero. The hero is above the fold, so
+  scroll-triggering it would mean animating something already on screen.
+- **`layout/ScrollProgress`** — a 2px `gold-600` line fixed at the top, width driven
+  by `useScroll().scrollYProgress` via `scaleX`. Mounted once in the root layout.
+
+**Reduced motion is a branch, not an afterthought.** Every primitive calls
+`useReducedMotion()` and, when true, renders the final resting state with no
+animated props at all (and `ScrollProgress` renders `null`). We chose the explicit
+early-return over animating-to-the-same-value because it's unambiguous: a visitor
+who opted out gets zero motion, full stop.
+
+**Why these shapes.**
+- `whileInView` over a manual `IntersectionObserver` + `useState` — it's the
+  library's purpose-built API; hand-rolling it is more code and more bugs.
+- Animate `transform`/`opacity` only — both are compositor-cheap and, crucially,
+  `transform` doesn't reflow siblings, which satisfies the "no layout-shifting
+  animation" rule. A `y` translate looks like movement without *being* layout.
+- `once: true` — entrances fire a single time; re-animating on every scroll-by is
+  exactly the fidgety behaviour the design brief rejects.
+
+**Alternatives rejected.**
+- *CSS-only `@keyframes` + scroll-driven animations* — no dependency, but `motion`
+  is already in the fixed stack (ADR-006), gives one consistent reduced-motion path,
+  and the `useScroll` progress bar is far simpler than the CSS equivalent today.
+- *One big `motion`-wrapped section component* — violates "wrap only the element
+  being animated"; the primitives keep the blast radius small and reusable.
+- *Per-letter hero reveal / parallax / scroll-linked section effects* (the
+  "expressive" option) — rejected as too loud for a quiet typographic site.
+
+**Consequences.**
+- New runtime dependency: `motion@12.40.0`. Recorded here and resolves the
+  "added in the final build step" note in ADR-006.
+- `HeroSection` and `ProjectScene` become Client Components (`'use client'`) — the
+  first client sections on the page. Acceptable: they're leaf presentation, no data
+  fetching moves client-side.
+- Scroll reveals depend on JS — with JS disabled, `Reveal` content starts at
+  `opacity: 0` and never animates in. Accepted trade-off for a JS-rendered Next.js
+  site; reduced-motion users are covered by the explicit branch above.
+- `ScrollProgress` sits at `z-50` (same as the nav). They don't overlap — the bar
+  is at `top-0`, the nav pill at `top-4` — so no arbitrary z-index was needed.

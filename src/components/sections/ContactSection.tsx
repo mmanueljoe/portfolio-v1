@@ -1,5 +1,6 @@
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionLabel } from "@/components/ui/SectionLabel";
+import { SITE } from "@/lib/site";
 
 const CONTACTS = [
   {
@@ -8,13 +9,13 @@ const CONTACTS = [
     external: false,
   },
   {
-    label: "github.com/mmanueljoe",
+    label: "GitHub",
     href: "https://github.com/mmanueljoe",
     external: true,
   },
   {
-    label: "linkedin.com/in/emmanuel-letsu",
-    href: "https://linkedin.com/in/emmanuel-letsu",
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/mmanueljoe/",
     external: true,
   },
 ];
@@ -46,6 +47,14 @@ export function ContactSection() {
             </a>
           ))}
         </div>
+        <a
+          href={SITE.cvPath}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-10 inline-block rounded-md bg-on-surface px-6 py-3 font-body text-sm font-medium text-surface transition-colors hover:bg-gold-600 hover:text-parchment-100"
+        >
+          Download CV
+        </a>
       </Reveal>
     </section>
   );

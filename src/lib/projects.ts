@@ -12,8 +12,9 @@ export const PROJECTS: Project[] = [
     title: "Resource Management",
     kicker: "Platform",
     line: "Staffing and allocation for a tech-services company across markets. I built the AI staff-matching interface and the analytics dashboard.",
-    stack: ["React", "TypeScript", "Node.js", "REST APIs"],
+    stack: ["Vue.js", "TypeScript", "Node.js", "GraphQL"],
     meta: "Professional contribution",
+    mockupSrc: "/images/projects/arms.png",
   },
   {
     title: "Kanban Task Manager",
@@ -22,5 +23,6 @@ export const PROJECTS: Project[] = [
     stack: ["React", "TypeScript", "Zustand"],
     meta: "Personal project",
     repoHref: "https://github.com/mmanueljoe/kanban-task-manager-zustand",
+    mockupSrc: "/images/projects/kanban.png",
   },
 ];

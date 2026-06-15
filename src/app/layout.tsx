@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { DM_Sans, Inter } from "next/font/google";
+import { Footer } from "@/components/layout/Footer";
 import { Nav } from "@/components/layout/Nav";
 import { ScrollProgress } from "@/components/layout/ScrollProgress";
+import { SITE } from "@/lib/site";
 import { Providers } from "./providers";
 import "./globals.css";
 
@@ -18,9 +20,22 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Emmanuel Joe Benson · Software Engineer",
-  description:
-    "Software engineer building full-stack web applications, from the API to the interface.",
+  metadataBase: new URL(SITE.url),
+  title: SITE.title,
+  description: SITE.description,
+  openGraph: {
+    title: SITE.title,
+    description: SITE.description,
+    url: SITE.url,
+    siteName: SITE.name,
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE.title,
+    description: SITE.description,
+  },
 };
 
 export default function RootLayout({
@@ -39,6 +54,7 @@ export default function RootLayout({
           <ScrollProgress />
           <Nav />
           {children}
+          <Footer />
         </Providers>
       </body>
     </html>

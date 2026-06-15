@@ -21,14 +21,14 @@ export function Nav() {
 
   return (
     <header className="fixed inset-x-0 top-4 z-50 flex justify-center px-4">
-      <nav className="w-full max-w-md rounded-2xl border border-on-surface/10 bg-surface/80 backdrop-blur md:w-auto md:rounded-full">
+      <nav className="w-full max-w-md rounded-2xl border border-on-surface/10 bg-surface/80 backdrop-blur md:w-auto md:max-w-none md:rounded-full">
         <div className="flex items-center justify-between gap-4 px-4 py-2.5 md:gap-6">
           <Link
             href="/"
             onClick={() => setMenuOpen(false)}
             className="font-display text-sm font-semibold tracking-tight text-on-surface"
           >
-            EJB
+            EJL
           </Link>
 
           <ul className="hidden items-center gap-6 md:flex">

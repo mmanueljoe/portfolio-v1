@@ -3,15 +3,17 @@
 import Link from "next/link";
 import { Badge } from "@/components/ui/Badge";
 import { Stagger, StaggerItem } from "@/components/ui/Stagger";
+import { SITE } from "@/lib/site";
 
 const SOCIALS = [
   { label: "GitHub", href: "https://github.com/mmanueljoe", external: true },
   {
     label: "LinkedIn",
-    href: "https://linkedin.com/in/emmanuel-letsu",
+    href: "https://www.linkedin.com/in/mmanueljoe/",
     external: true,
   },
   { label: "Email", href: "mailto:emmanuelletsu18@gmail.com", external: false },
+  { label: "CV", href: SITE.cvPath, external: true },
 ];
 
 export function HeroSection() {
@@ -24,7 +26,7 @@ export function HeroSection() {
 
         <StaggerItem>
           <h1 className="mt-6 font-display text-4xl font-bold tracking-tight text-on-surface sm:text-5xl md:text-6xl">
-            Emmanuel Joe Benson
+            Emmanuel Joe Letsu
           </h1>
         </StaggerItem>
         <StaggerItem>

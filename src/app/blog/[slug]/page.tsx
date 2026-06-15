@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import type { ComponentType } from "react";
 import { PostHeader } from "@/components/blog/PostHeader";
 import { getAllPosts, getPostBySlug } from "@/lib/blog";
@@ -34,6 +35,12 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   return (
     <main className="flex-1">
       <article className="mx-auto w-full max-w-prose px-6 py-32">
+        <Link
+          href="/blog"
+          className="mb-10 inline-block font-body text-sm font-medium text-gold-600 transition-colors hover:underline"
+        >
+          ← Back to writing
+        </Link>
         <PostHeader
           title={post.title}
           date={post.date}
