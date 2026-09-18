@@ -1,13 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
-  <rect width="32" height="32" rx="7" fill="#1A1A18" />
+  <rect width="32" height="32" fill="#FFFFFF" />
   <text
-    x="16"
+    x="7"
     y="17"
-    text-anchor="middle"
     dominant-baseline="central"
     font-family="'DM Sans', 'Segoe UI', system-ui, sans-serif"
     font-weight="700"
-    font-size="20"
-    fill="#C8924A"
-  >E</text>
+    font-size="17"
+    letter-spacing="-0.04em"
+    fill="#111111"
+  >J<tspan fill="#3B2A6B">.</tspan></text>
 </svg>

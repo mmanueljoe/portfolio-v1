@@ -3,12 +3,13 @@ export interface NavLink {
   href: string;
 }
 
-// Section links are absolute (`/#projects`) so they also work from /blog, not
-// just the home page. Order matches the on-page scroll order.
+// Section links are absolute (`/#work`) so they also work from /blog, not just
+// the home page. Order matches the on-page scroll order. Writing points at the
+// on-page section, which then links through to the individual posts.
 export const NAV_LINKS: NavLink[] = [
-  { label: "Projects", href: "/#projects" },
+  { label: "Work", href: "/#work" },
   { label: "About", href: "/#about" },
   { label: "Skills", href: "/#skills" },
-  { label: "Blog", href: "/blog" },
+  { label: "Writing", href: "/#writing" },
   { label: "Contact", href: "/#contact" },
 ];

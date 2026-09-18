@@ -1,10 +1,18 @@
+export interface ProjectFact {
+  term: string;
+  value: string;
+}
+
 export interface Project {
-  title: string;
+  /** Sits after the entry number: "01 / PROFESSIONAL". */
   kicker: string;
-  line: string;
+  title: string;
+  /** Exactly two paragraphs — the layout is designed around that count. */
+  body: [string, string];
+  facts: ProjectFact[];
   stack: string[];
-  meta?: string;
   repoHref?: string;
-  liveHref?: string;
-  mockupSrc?: string;
+  writeupHref?: string;
+  imageSrc: string;
+  imageAlt: string;
 }

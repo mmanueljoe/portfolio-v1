@@ -1,8 +1,8 @@
 "use client";
 
-import Link from "next/link";
-import { Badge } from "@/components/ui/Badge";
+import { ButtonLink } from "@/components/ui/ButtonLink";
 import { Stagger, StaggerItem } from "@/components/ui/Stagger";
+import { TextLink } from "@/components/ui/TextLink";
 import { SITE } from "@/lib/site";
 
 const SOCIALS = [
@@ -13,63 +13,54 @@ const SOCIALS = [
     external: true,
   },
   { label: "Email", href: "mailto:emmanuelletsu18@gmail.com", external: false },
-  { label: "CV", href: SITE.cvPath, external: true },
 ];
 
 export function HeroSection() {
   return (
-    <section className="flex min-h-screen items-center justify-center bg-surface">
-      <Stagger className="mx-auto flex w-full max-w-3xl flex-col items-center px-6 text-center">
+    <section className="px-gutter pt-hero-top pb-hero-bottom">
+      <Stagger className="mx-auto w-full max-w-page">
         <StaggerItem>
-          <Badge>Open to work</Badge>
+          <span className="font-mono text-meta tracking-eyebrow text-on-surface-muted">
+            EMMANUEL JOE LETSU, SOFTWARE ENGINEER, ACCRA
+          </span>
         </StaggerItem>
 
         <StaggerItem>
-          <h1 className="mt-6 font-display text-4xl font-bold tracking-tight text-on-surface sm:text-5xl md:text-6xl">
-            Emmanuel Joe Letsu
+          <h1 className="mt-5.5 max-w-hero-head font-display text-hero font-bold text-on-surface">
+            I build software the way I&apos;d want to inherit it
+            <span className="text-accent">.</span>
           </h1>
         </StaggerItem>
-        <StaggerItem>
-          <p className="mt-4 font-body text-lg text-on-surface-muted">
-            Software Engineer
-          </p>
-        </StaggerItem>
-        <StaggerItem>
-          <p className="mt-4 max-w-xl font-body text-base font-light text-on-surface-muted">
-            I build full-stack web applications that are well-engineered and
-            considered, from the API to the interface.
-          </p>
-        </StaggerItem>
 
-        <StaggerItem>
-          <Link
-            href="/#projects"
-            className="mt-8 inline-block font-body text-sm font-medium text-gold-600 transition-colors hover:underline"
-          >
-            View my work →
-          </Link>
-        </StaggerItem>
+        <StaggerItem className="mt-hero-row grid grid-pair-hero items-end gap-pair-col">
+          <p className="max-w-hero-lede font-body text-lede text-on-surface-muted">
+            Full stack, from the API to the interface. I care about the parts
+            nobody sees, because that&apos;s usually where the trouble starts.
+          </p>
 
-        <StaggerItem className="mt-8 flex items-center justify-center gap-4 font-body text-sm">
-          {SOCIALS.map((social, index) => (
-            <span key={social.label} className="flex items-center gap-4">
-              {index > 0 && (
-                <span className="text-on-surface-muted" aria-hidden>
-                  ·
-                </span>
-              )}
-              <a
-                href={social.href}
-                className="text-gold-600 transition-colors hover:underline"
-                {...(social.external && {
-                  target: "_blank",
-                  rel: "noopener noreferrer",
-                })}
-              >
-                {social.label}
-              </a>
-            </span>
-          ))}
+          <div className="grid gap-5.5">
+            <div className="flex flex-wrap gap-3">
+              <ButtonLink href="/#work" variant="primary">
+                See the work
+              </ButtonLink>
+              <ButtonLink href={SITE.cvPath} variant="secondary" external>
+                Download CV
+              </ButtonLink>
+            </div>
+
+            <div className="flex flex-wrap gap-4.5">
+              {SOCIALS.map((social) => (
+                <TextLink
+                  key={social.label}
+                  href={social.href}
+                  external={social.external}
+                  size="nav"
+                >
+                  {social.label}
+                </TextLink>
+              ))}
+            </div>
+          </div>
         </StaggerItem>
       </Stagger>
     </section>

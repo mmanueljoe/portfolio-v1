@@ -1,45 +1,48 @@
 import { Reveal } from "@/components/ui/Reveal";
-import { SectionLabel } from "@/components/ui/SectionLabel";
+import { SectionHead } from "@/components/ui/SectionHead";
+
+const PARAGRAPHS = [
+  "I work across the stack, from interfaces to APIs, and I hold the same standard at both ends. Careful, systems-oriented, always thinking about the person on the other side of the thing.",
+  "None of that came from a plan. I didn't grow up with a map into tech. Where I'm from, career guidance and good resources were scarce, and I came to computer science almost by accident. What made it real was changing how I learn. I finished with a first-class degree, but the lesson that stuck was smaller: stop memorising to pass, start actually understanding.",
+  "I read widely. Philosophy, psychology, design, art, music. None of it is a detour; the bigger picture makes me better at the job. Broad across many things, deep where it counts.",
+];
+
+const CLOSER =
+  "Right now the deep part is AI. I'm headed into a Master's in it next.";
 
 export function AboutSection() {
   return (
-    <section id="about" className="bg-surface py-24">
-      <Reveal className="mx-auto w-full max-w-2xl px-6">
-        <SectionLabel>About</SectionLabel>
+    <section id="about" className="px-gutter pb-section">
+      <Reveal className="mx-auto w-full max-w-page">
+        <SectionHead title="About" />
 
-        <div className="mt-8 flex flex-col gap-6 font-body text-md leading-relaxed text-on-surface text-justify hyphens-auto">
-          <p>
-            I'm a software engineer with a particular way of working. Careful,
-            systems-oriented, and always thinking about the person on the other
-            side of what I'm building. I work across the stack, from interfaces
-            to APIs, and I hold the same standard at both ends.
-          </p>
-          <p>
-            I don't separate technical skill from human understanding. I think
-            they're the same thing, expressed differently. The best interfaces
-            are backed by well-structured systems; the best systems were shaped
-            around someone's real workflow. I try to hold both at once.
-          </p>
-          <p>
-            That conviction didn't come from a plan. I didn't grow up with a map
-            into tech. Where I'm from, career guidance and good resources were
-            scarce, and I came to computer science almost by accident. What made
-            it real was changing how I learn: I finished with a first-class
-            degree, but the lesson that stuck was to stop memorizing to pass and
-            start genuinely understanding.
-          </p>
-          <p>
-            I'm a lover of wisdom by temperament: endlessly curious, and
-            convinced that knowledge is connected. I read widely across
-            philosophy, psychology, design, art, and music. None of it is a
-            detour; the bigger picture makes me a better engineer, and a better
-            person. I'm working to be T-shaped, broad across many things and
-            deep where it counts.
-          </p>
-          <p>
-            Right now, where I'm going deep is AI. I'm headed into a Master's in
-            it next.
-          </p>
+        <div className="mt-10 grid grid-pair-entry items-start gap-pair-col">
+          <div>
+            <p className="mb-5 max-w-quote font-display text-quote font-medium text-on-surface">
+              I don&apos;t separate technical skill from human understanding.
+              They&apos;re the same thing, said differently.
+            </p>
+            <p className="max-w-quote-sub font-body text-about-sub text-on-surface-muted">
+              The best interfaces are backed by well-structured systems. The
+              best systems were shaped around somebody&apos;s real workflow. I
+              try to hold both at once.
+            </p>
+          </div>
+
+          <div className="grid gap-4">
+            {PARAGRAPHS.map((paragraph) => (
+              <p
+                key={paragraph}
+                className="max-w-prose-wide font-body text-about text-on-surface-muted"
+              >
+                {paragraph}
+              </p>
+            ))}
+            {/* Full ink rather than muted, so the last line lands. */}
+            <p className="max-w-prose-wide font-body text-about text-on-surface">
+              {CLOSER}
+            </p>
+          </div>
         </div>
       </Reveal>
     </section>

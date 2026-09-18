@@ -3,7 +3,7 @@ import Link from "next/link";
 export default function NotFound() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-surface px-6 text-center">
-      <p className="font-body text-sm font-medium uppercase tracking-widest text-gold-600">
+      <p className="font-body text-sm font-medium uppercase tracking-widest text-accent">
         404
       </p>
       <h1 className="mt-5 font-display text-4xl font-bold tracking-tight text-on-surface sm:text-5xl">
@@ -14,7 +14,7 @@ export default function NotFound() {
       </p>
       <Link
         href="/"
-        className="mt-8 font-body text-sm font-medium text-gold-600 transition-colors hover:underline"
+        className="mt-8 font-body text-sm font-medium text-accent transition-colors hover:underline"
       >
         Back home →
       </Link>

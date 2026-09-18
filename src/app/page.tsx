@@ -1,17 +1,18 @@
 import { AboutSection } from "@/components/sections/AboutSection";
-import { ContactSection } from "@/components/sections/ContactSection";
 import { HeroSection } from "@/components/sections/HeroSection";
-import { ProjectsSection } from "@/components/sections/ProjectsSection";
 import { SkillsSection } from "@/components/sections/SkillsSection";
+import { WorkSection } from "@/components/sections/WorkSection";
+import { WritingSection } from "@/components/sections/WritingSection";
 
+// Contact is the footer, rendered by the root layout.
 export default function Home() {
   return (
     <main className="flex-1">
       <HeroSection />
-      <ProjectsSection />
+      <WorkSection />
       <AboutSection />
       <SkillsSection />
-      <ContactSection />
+      <WritingSection />
     </main>
   );
 }

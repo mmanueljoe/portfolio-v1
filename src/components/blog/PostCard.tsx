@@ -7,29 +7,37 @@ interface PostCardProps {
   description: string;
 }
 
-export function PostCard({ slug, title, date, description }: PostCardProps) {
-  const formatted = new Date(date).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+// 2026-06-10 → 2026.06.10. Formatted off the raw frontmatter string rather than
+// a Date, so the displayed day can't drift by a timezone.
+function formatDate(date: string): string {
+  return date.slice(0, 10).replaceAll("-", ".");
+}
 
+export function PostCard({
+  slug,
+  title,
+  date,
+  description,
+}: Readonly<PostCardProps>) {
   return (
-    <article>
-      <Link href={`/blog/${slug}`} className="group block">
+    <Link
+      href={`/blog/${slug}`}
+      className="grid grid-pair-post items-baseline gap-x-6 gap-y-3 border-b border-hairline px-1 py-6.5 transition-colors duration-150 hover:bg-row-hover"
+    >
+      <div>
         <time
           dateTime={date}
-          className="font-body text-sm text-on-surface-muted"
+          className="mb-2 block font-mono text-date text-on-surface-muted"
         >
-          {formatted}
+          {formatDate(date)}
         </time>
-        <h2 className="mt-1 font-display text-xl font-semibold text-on-surface transition-colors group-hover:text-gold-600">
+        <span className="block font-display text-post-title font-medium text-on-surface">
           {title}
-        </h2>
-        <p className="mt-2 font-body text-base text-on-surface-muted">
-          {description}
-        </p>
-      </Link>
-    </article>
+        </span>
+      </div>
+      <p className="max-w-post-desc font-body text-post-desc text-on-surface-muted">
+        {description}
+      </p>
+    </Link>
   );
 }

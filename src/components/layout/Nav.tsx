@@ -1,79 +1,33 @@
-"use client";
-
-import { Menu, X } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-
+import { Badge } from "@/components/ui/Badge";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { Wordmark } from "@/components/ui/Wordmark";
 import { NAV_LINKS } from "@/lib/nav";
 
+// A flat bar, not the old floating pill. It wraps rather than collapsing into a
+// drawer, which is why there's no open/close state here and no "use client".
 export function Nav() {
-  const [menuOpen, setMenuOpen] = useState(false);
-
-  useEffect(() => {
-    if (!menuOpen) return;
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setMenuOpen(false);
-    };
-    globalThis.addEventListener("keydown", onKey);
-    return () => globalThis.removeEventListener("keydown", onKey);
-  }, [menuOpen]);
-
   return (
-    <header className="fixed inset-x-0 top-4 z-50 flex justify-center px-4">
-      <nav className="w-full max-w-md rounded-2xl border border-on-surface/10 bg-surface/80 backdrop-blur md:w-auto md:max-w-none md:rounded-full">
-        <div className="flex items-center justify-between gap-4 px-4 py-2.5 md:gap-6">
-          <Link
-            href="/"
-            onClick={() => setMenuOpen(false)}
-            className="font-display text-sm font-semibold tracking-tight text-on-surface"
-          >
-            EJL
-          </Link>
+    <header className="border-b border-hairline px-gutter">
+      <div className="mx-auto flex w-full max-w-page flex-wrap items-center justify-between gap-6 py-5">
+        <Link href="/" aria-label="Home">
+          <Wordmark size="nav" />
+        </Link>
 
-          <ul className="hidden items-center gap-6 md:flex">
-            {NAV_LINKS.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  className="font-body text-sm font-medium text-on-surface-muted transition-colors hover:text-on-surface"
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-
-          <div className="flex items-center gap-2">
-            <ThemeToggle />
-            <button
-              type="button"
-              onClick={() => setMenuOpen((open) => !open)}
-              aria-label={menuOpen ? "Close menu" : "Open menu"}
-              aria-expanded={menuOpen}
-              className="text-on-surface md:hidden"
+        <nav className="flex flex-wrap items-center gap-nav-gap">
+          {NAV_LINKS.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="font-body text-nav text-on-surface-muted transition-colors duration-150 hover:text-on-surface"
             >
-              {menuOpen ? <X size={18} /> : <Menu size={18} />}
-            </button>
-          </div>
-        </div>
-
-        {menuOpen && (
-          <ul className="flex flex-col border-t border-on-surface/10 px-4 py-3 md:hidden">
-            {NAV_LINKS.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  onClick={() => setMenuOpen(false)}
-                  className="block py-1.5 font-body text-base font-medium text-on-surface-muted transition-colors hover:text-on-surface"
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        )}
-      </nav>
+              {link.label}
+            </Link>
+          ))}
+          <Badge>OPEN TO WORK</Badge>
+          <ThemeToggle />
+        </nav>
+      </div>
     </header>
   );
 }

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { DM_Sans, Inter } from "next/font/google";
-import { Footer } from "@/components/layout/Footer";
+import { DM_Sans, Inter, JetBrains_Mono } from "next/font/google";
 import { Nav } from "@/components/layout/Nav";
 import { ScrollProgress } from "@/components/layout/ScrollProgress";
+import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SITE } from "@/lib/site";
 import { Providers } from "./providers";
 import "./globals.css";
@@ -15,6 +15,12 @@ const dmSans = DM_Sans({
 
 const inter = Inter({
   variable: "--font-inter",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
   subsets: ["latin"],
   display: "swap",
 });
@@ -47,14 +53,14 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${dmSans.variable} ${inter.variable} h-full antialiased`}
+      className={`${dmSans.variable} ${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <Providers>
           <ScrollProgress />
           <Nav />
           {children}
-          <Footer />
+          <SiteFooter />
         </Providers>
       </body>
     </html>

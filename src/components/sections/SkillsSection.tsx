@@ -1,5 +1,5 @@
 import { Reveal } from "@/components/ui/Reveal";
-import { SectionLabel } from "@/components/ui/SectionLabel";
+import { SectionHead } from "@/components/ui/SectionHead";
 
 const SKILL_GROUPS = [
   {
@@ -12,7 +12,7 @@ const SKILL_GROUPS = [
       "PostgreSQL",
       "Tailwind CSS",
       "REST API design",
-      "JWT Authentication",
+      "JWT authentication",
       "Git",
       "Vercel",
     ],
@@ -34,7 +34,7 @@ const SKILL_GROUPS = [
   },
   {
     label: "Certified",
-    skills: ["AWS Cloud Practitioner (2025)"],
+    skills: ["AWS Cloud Practitioner, 2025"],
   },
   {
     label: "Exploring",
@@ -50,22 +50,27 @@ const SKILL_GROUPS = [
   },
 ];
 
+// The only inverted section on the page. Rules sit on each row rather than on
+// the list: a container background showing through a `gap` leaves a visible
+// plate whenever auto-fit resolves to a column count that doesn't divide evenly.
 export function SkillsSection() {
   return (
-    <section id="skills" className="bg-surface py-24">
-      <Reveal className="mx-auto w-full max-w-4xl px-6">
-        <SectionLabel>Skills</SectionLabel>
+    <section id="skills" className="bg-surface-alt px-gutter py-section">
+      <Reveal className="mx-auto w-full max-w-page">
+        <SectionHead title="Skills" meta="SORTED HONESTLY" tone="alt" />
 
-        <dl className="mt-12 flex flex-col divide-y divide-on-surface/10">
-          {SKILL_GROUPS.map((group) => (
+        <dl className="mt-2 grid">
+          {SKILL_GROUPS.map((group, index) => (
             <div
               key={group.label}
-              className="flex flex-col gap-2 py-6 first:pt-0 last:pb-0 md:flex-row md:gap-8"
+              className={`grid grid-pair-skills gap-x-8 gap-y-2 border-t border-hairline-alt py-6 ${
+                index === SKILL_GROUPS.length - 1 ? "border-b" : ""
+              }`}
             >
-              <dt className="shrink-0 font-display text-base font-semibold text-on-surface md:w-48">
+              <dt className="font-display text-skill-term font-semibold text-on-surface-alt">
                 {group.label}
               </dt>
-              <dd className="font-body text-base leading-relaxed text-on-surface-muted">
+              <dd className="font-body text-skill-value text-on-surface-alt-muted">
                 {group.skills.join(" · ")}
               </dd>
             </div>

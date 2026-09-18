@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { PostCard } from "@/components/blog/PostCard";
 import { Reveal } from "@/components/ui/Reveal";
-import { SectionLabel } from "@/components/ui/SectionLabel";
+import { SectionHead } from "@/components/ui/SectionHead";
 import { getAllPosts } from "@/lib/blog";
 
 export const metadata: Metadata = {
-  title: "Writing · Emmanuel Joe Benson",
+  title: "Writing · Emmanuel Joe Letsu",
   description: "Notes on engineering, learning, and the things I build.",
 };
 
@@ -14,15 +14,13 @@ export default function BlogPage() {
 
   return (
     <main className="flex-1">
-      <section className="bg-surface py-32">
-        <Reveal className="mx-auto w-full max-w-2xl px-6">
-          <SectionLabel>Writing</SectionLabel>
+      <section className="px-gutter py-section">
+        <Reveal className="mx-auto w-full max-w-page">
+          <SectionHead title="Writing" meta="WHEN I'VE LEARNT SOMETHING" />
 
-          <div className="mt-12 flex flex-col divide-y divide-on-surface/10">
+          <div className="mt-2">
             {posts.map((post) => (
-              <div key={post.slug} className="py-8 first:pt-0 last:pb-0">
-                <PostCard {...post} />
-              </div>
+              <PostCard key={post.slug} {...post} />
             ))}
           </div>
         </Reveal>

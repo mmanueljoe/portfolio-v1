@@ -20,7 +20,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const post = getPostBySlug(slug);
   return {
-    title: `${post.title} · Emmanuel Joe Benson`,
+    title: `${post.title} · Emmanuel Joe Letsu`,
     description: post.description,
   };
 }
@@ -34,10 +34,10 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   return (
     <main className="flex-1">
-      <article className="mx-auto w-full max-w-prose px-6 py-32">
+      <article className="mx-auto w-full max-w-prose px-gutter py-section">
         <Link
           href="/blog"
-          className="mb-10 inline-block font-body text-sm font-medium text-gold-600 transition-colors hover:underline"
+          className="mb-10 inline-block border-b border-hairline pb-0.5 font-body text-link text-on-surface transition-colors duration-150 hover:border-accent hover:text-accent"
         >
           ← Back to writing
         </Link>

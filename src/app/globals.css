@@ -1,44 +1,148 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-/* next-themes toggles `.dark` on <html>; wiring the variant now so sections
-   built before the toggle (step 4) already resolve. ADR-008. */
+/* next-themes toggles `.dark` on <html>. */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Tailwind v4 configures tokens in CSS, not a config file (ADR-004). Inline
-   labels map each hex to its design-system palette name. */
+/* Brand v3.1 (September 2026). Replaces the v1.0 gold/parchment palette.
+   White page, neutral black ink, one violet accent, parchment for print only.
+   Inline labels map each hex to its brand-guide name. */
 @theme {
-  --color-ink-50: #f5f3f0;
-  --color-ink-100: #e0ddd8;
-  --color-ink-200: #b8b4ae;
-  --color-ink-400: #888480;
-  --color-ink-600: #555250;
-  --color-ink-800: #2e2c2a;
-  --color-ink-900: #1a1a18;
+  /* Neutral ramp. Does ~96% of the work. */
+  --color-ink-0: #ffffff; /* grey 0    page */
+  --color-ink-50: #fafafa; /* grey 50   surface */
+  --color-ink-100: #f2f2f2; /* grey 100  hover */
+  --color-ink-200: #e4e4e4; /* grey 200  border */
+  --color-ink-300: #c9c9c9; /* grey 300  divider */
+  --color-ink-400: #9e9e9e; /* grey 400  disabled */
+  --color-ink-500: #6e6e6e; /* grey 500  muted text */
+  --color-ink-600: #4a4a4a; /* grey 600  body text */
+  --color-ink-700: #2c2c2c; /* grey 700  heading */
+  --color-ink-800: #1a1a1a; /* grey 800  dark elevation */
+  --color-ink-900: #111111; /* grey 900  black */
 
-  --color-parchment-50: #fdfbf7;
-  --color-parchment-100: #faf6ee;
-  --color-parchment-200: #f2ebd9;
-  --color-parchment-300: #e8dfc8;
-  --color-parchment-400: #d8cdb0;
-  --color-parchment-600: #c0b090;
-  --color-parchment-800: #8a7a60;
+  /* Violet ramp. 600 is the accent, 200 stands in for it on dark. */
+  --color-violet-50: #f3f1fa;
+  --color-violet-100: #e3dff2;
+  --color-violet-200: #c4bce4;
+  --color-violet-300: #a296d2;
+  --color-violet-400: #7e6fbd;
+  --color-violet-500: #5e4e9e;
+  --color-violet-600: #3b2a6b;
+  --color-violet-700: #2f2156;
+  --color-violet-800: #241940;
+  --color-violet-900: #18112b;
 
-  --color-gold-50: #fdf4e8;
-  --color-gold-100: #f5dfb0;
-  --color-gold-200: #e8c070;
-  --color-gold-400: #d4a853;
-  --color-gold-600: #c8924a;
-  --color-gold-800: #a06a28;
-  --color-gold-900: #704a18;
+  /* Print only. Never render parchment on screen. */
+  --color-parchment: #f2ebd9;
 
-  /* Set by next/font in layout.tsx (step 2); fall back until then. */
   --font-display: var(--font-dm-sans), sans-serif;
   --font-body: var(--font-inter), sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+
+  /* Type scale. Each role carries its own line-height and tracking so a single
+     class sets all three — the handoff specifies them together, so they travel
+     together. Fluid roles keep the reference's exact clamp() values. */
+  --text-hero: clamp(36px, 5.6vw, 66px);
+  --text-hero--line-height: 1.06;
+  --text-hero--letter-spacing: -0.04em;
+
+  --text-section: clamp(24px, 3vw, 32px);
+  --text-section--letter-spacing: -0.03em;
+
+  --text-footer-head: clamp(30px, 4.6vw, 48px);
+  --text-footer-head--line-height: 1.05;
+  --text-footer-head--letter-spacing: -0.04em;
+
+  --text-project: clamp(22px, 2.6vw, 30px);
+  --text-project--letter-spacing: -0.03em;
+
+  --text-quote: clamp(22px, 3vw, 30px);
+  --text-quote--line-height: 1.32;
+  --text-quote--letter-spacing: -0.025em;
+
+  --text-post-title: 21px;
+  --text-post-title--line-height: 1.3;
+  --text-post-title--letter-spacing: -0.025em;
+
+  --text-wordmark: 22px;
+  --text-wordmark--letter-spacing: -0.04em;
+  --text-wordmark-sm: 17px;
+  --text-wordmark-sm--letter-spacing: -0.04em;
+
+  --text-skill-term: 17px;
+  --text-lede: 18.5px;
+  --text-lede--line-height: 1.6;
+
+  /* 16.5px twice: project bodies sit tighter than About's, which runs longer. */
+  --text-body: 16.5px;
+  --text-body--line-height: 1.65;
+  --text-about: 16.5px;
+  --text-about--line-height: 1.7;
+  --text-about-sub: 16px;
+  --text-about-sub--line-height: 1.65;
+
+  --text-footer-lede: 17px;
+  --text-footer-lede--line-height: 1.6;
+
+  --text-fact: 15px;
+  --text-fact--line-height: 1.55;
+
+  /* 15.5px three times, each with its own leading. */
+  --text-skill-value: 15.5px;
+  --text-skill-value--line-height: 1.7;
+  --text-post-desc: 15.5px;
+  --text-post-desc--line-height: 1.6;
+  --text-where: 15.5px;
+  --text-where--line-height: 1.55;
+
+  --text-nav: 14.5px;
+  --text-note: 14.5px;
+  --text-note--line-height: 1.6;
+  --text-link: 14px;
+  --text-button: 13px;
+  --text-date: 11.5px;
+  --text-meta: 11px;
+  --text-tag: 10.5px;
+
+  /* Mono tracking, which varies by role. */
+  --tracking-tag: 0.06em;
+  --tracking-pill: 0.08em;
+  --tracking-meta: 0.1em;
+  --tracking-kicker: 0.12em;
+  --tracking-eyebrow: 0.14em;
+
+  /* Fluid spacing. The gutter and section rhythm carry the whole page. */
+  --spacing-gutter: clamp(20px, 4vw, 56px);
+  --spacing-section: clamp(56px, 8vw, 96px);
+  --spacing-hero-top: clamp(60px, 10vw, 128px);
+  --spacing-hero-bottom: clamp(52px, 8vw, 88px);
+  --spacing-hero-row: clamp(32px, 5vw, 52px);
+  --spacing-entry: clamp(52px, 7vw, 92px);
+  --spacing-entry-col: clamp(28px, 4vw, 56px);
+  --spacing-pair-col: clamp(28px, 5vw, 64px);
+  --spacing-footer-top: clamp(56px, 8vw, 92px);
+  --spacing-footer-col: clamp(32px, 5vw, 72px);
+  --spacing-bottom-bar: clamp(40px, 6vw, 72px);
+  --spacing-nav-gap: clamp(16px, 2.6vw, 30px);
+
+  /* Measures. Named by what they hold, not by number. */
+  --container-page: 1120px;
+  --container-hero-head: 24ch;
+  --container-hero-lede: 46ch;
+  --container-quote: 26ch;
+  --container-quote-sub: 46ch;
+  --container-prose: 54ch;
+  --container-prose-wide: 58ch;
+  --container-footer-lede: 42ch;
+  --container-post-desc: 50ch;
+
+  --radius-brand: 2px;
+  --aspect-shot: 16 / 10;
 }
 
-/* Semantic surface roles. Sections use surface/on-surface (one calm surface, no
-   alternation); surface-alt is for subtle elevation only. ADR-008, ADR-010. */
+/* Semantic roles. Components should use these, not raw ramp stops, so the
+   light/dark swap happens in one place. */
 @theme inline {
   --color-surface: var(--surface);
   --color-on-surface: var(--on-surface);
@@ -46,26 +150,74 @@
   --color-surface-alt: var(--surface-alt);
   --color-on-surface-alt: var(--on-surface-alt);
   --color-on-surface-alt-muted: var(--on-surface-alt-muted);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-on-accent: var(--on-accent);
+  --color-hairline: var(--hairline);
+  --color-hairline-alt: var(--hairline-alt);
+  --color-row-hover: var(--row-hover);
+  --color-shot-bed: var(--shot-bed);
 }
 
 :root {
-  --surface: #faf6ee; /* parchment-100 */
-  --on-surface: #1a1a18; /* ink-900 */
-  --on-surface-muted: #555250; /* ink-600 */
-  --surface-alt: #e8dfc8; /* parchment-300 — subtle elevation */
-  --on-surface-alt: #1a1a18; /* ink-900 */
-  --on-surface-alt-muted: #555250; /* ink-600 */
+  --surface: #ffffff; /* grey 0 */
+  --on-surface: #111111; /* grey 900 */
+  --on-surface-muted: #4a4a4a; /* grey 600, body text */
+  --surface-alt: #111111; /* the dark band (Skills) inverts */
+  --on-surface-alt: #ffffff;
+  --on-surface-alt-muted: #c9c9c9; /* grey 300 on black, 11.5:1 */
+  --accent: #3b2a6b; /* violet 600, 12.3:1 on white */
+  --accent-hover: #241940; /* violet 800 */
+  --on-accent: #ffffff;
+  --hairline: #e4e4e4; /* grey 200 */
+  --hairline-alt: #4a4a4a; /* the hairline inside the dark band */
+  --row-hover: #fafafa; /* grey 50, the writing row fill */
+  --shot-bed: #fafafa; /* what shows around a contained screenshot */
 }
 
-/* Dark mode. surface-alt is a subtle elevation over surface (ink-800 over
-   ink-900; parchment-300 over parchment-100 in light). ADR-010. */
+/* Dark mode. Black page, white ink, violet 200 as the accent because violet 600
+   is too close to black to register on a dark surface. Ratios: white on black
+   18.9:1, grey 300 on black 11.5:1, violet 200 on black 10.6:1. */
 .dark {
-  --surface: #1a1a18; /* ink-900 */
-  --on-surface: #f2ebd9; /* parchment-200 */
-  --on-surface-muted: #8a7a60; /* parchment-800 */
-  --surface-alt: #2e2c2a; /* ink-800 */
-  --on-surface-alt: #f2ebd9; /* parchment-200 */
-  --on-surface-alt-muted: #8a7a60; /* parchment-800 */
+  --surface: #111111;
+  --on-surface: #ffffff;
+  --on-surface-muted: #c9c9c9;
+  --surface-alt: #1a1a1a; /* grey 800, subtle elevation */
+  --on-surface-alt: #ffffff;
+  --on-surface-alt-muted: #9e9e9e; /* grey 400 on grey 800 */
+  --accent: #c4bce4; /* violet 200 */
+  --accent-hover: #e3dff2; /* violet 100 — hover lightens on dark */
+  --on-accent: #111111;
+  --hairline: #4a4a4a; /* grey 600 reads as a hairline on black */
+  --hairline-alt: #4a4a4a;
+  /* Both of these lift off the page instead of flashing white. */
+  --row-hover: #1a1a1a; /* grey 800 */
+  --shot-bed: #1a1a1a;
+}
+
+/* Every two-column block in this design is auto-fit with a minmax floor, so it
+   collapses to one column on its own and the page needs no media queries. The
+   floors differ per block because the content in each has a different natural
+   minimum; they're named for where they're used. */
+@utility grid-pair-hero {
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+}
+@utility grid-pair-entry {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+@utility grid-pair-skills {
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+@utility grid-pair-post {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+@utility grid-pair-contact {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+/* Project fact rows: a fixed mono term against a flexible value. */
+@utility grid-facts {
+  grid-template-columns: 96px 1fr;
 }
 
 @layer base {
@@ -74,16 +226,14 @@
   }
 
   ::selection {
-    @apply bg-gold-200 text-ink-900;
+    @apply bg-violet-200 text-ink-900;
   }
 
   html {
     scroll-behavior: smooth;
-    /* clear the floating nav pill when jumping to an anchor */
     scroll-padding-top: 5rem;
   }
 
-  /* Honour visitors who ask the OS to reduce motion. */
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;

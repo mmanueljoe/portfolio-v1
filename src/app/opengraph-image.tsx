@@ -7,8 +7,8 @@ export const contentType = "image/png";
 
 // next/og renders this JSX with Satori, which only reads inline styles (no
 // classNames or design tokens), so the brand hex values are repeated here by
-// necessity. Uses the default sans rather than DM Sans — the palette carries the
-// brand and it keeps the build free of font-bundling.
+// necessity. Uses the default sans rather than DM Sans — it keeps the build free
+// of font-bundling, and the palette carries the brand.
 export default function OpenGraphImage() {
   return new ImageResponse(
     <div
@@ -17,58 +17,46 @@ export default function OpenGraphImage() {
         width: "100%",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
-        padding: "100px",
-        backgroundColor: "#FAF6EE",
+        justifyContent: "space-between",
+        padding: "80px",
+        backgroundColor: "#FFFFFF",
       }}
     >
+      <span
+        style={{
+          fontSize: "24px",
+          color: "#4A4A4A",
+          letterSpacing: "0.14em",
+        }}
+      >
+        EMMANUEL JOE LETSU, SOFTWARE ENGINEER, ACCRA
+      </span>
+
       <div
         style={{
           display: "flex",
-          alignItems: "center",
-          gap: "16px",
-          marginBottom: "32px",
-        }}
-      >
-        <div
-          style={{
-            width: "16px",
-            height: "16px",
-            borderRadius: "9999px",
-            backgroundColor: "#C8924A",
-          }}
-        />
-        <span
-          style={{
-            fontSize: "28px",
-            color: "#C8924A",
-            letterSpacing: "0.15em",
-            textTransform: "uppercase",
-          }}
-        >
-          Software Engineer
-        </span>
-      </div>
-      <div
-        style={{
-          fontSize: "96px",
+          fontSize: "88px",
           fontWeight: 700,
-          color: "#1A1A18",
-          lineHeight: 1.05,
+          color: "#111111",
+          lineHeight: 1.06,
+          letterSpacing: "-0.04em",
+          maxWidth: "900px",
         }}
       >
-        Emmanuel Joe Letsu
+        I build software the way I&apos;d want to inherit it
+        <span style={{ color: "#3B2A6B" }}>.</span>
       </div>
-      <div
+
+      <span
         style={{
-          fontSize: "36px",
-          color: "#555250",
-          marginTop: "28px",
-          maxWidth: "820px",
+          fontSize: "34px",
+          fontWeight: 700,
+          color: "#111111",
+          letterSpacing: "-0.04em",
         }}
       >
-        I build full-stack web applications, from the API to the interface.
-      </div>
+        Joe<span style={{ color: "#3B2A6B" }}>.</span>
+      </span>
     </div>,
     { ...size },
   );

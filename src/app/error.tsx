@@ -17,7 +17,7 @@ export default function SegmentError({ error, reset }: Readonly<ErrorProps>) {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center bg-surface px-6 text-center">
-      <p className="font-body text-sm font-medium uppercase tracking-widest text-gold-600">
+      <p className="font-body text-sm font-medium uppercase tracking-widest text-accent">
         Error
       </p>
       <h1 className="mt-5 font-display text-4xl font-bold tracking-tight text-on-surface sm:text-5xl">
@@ -31,13 +31,13 @@ export default function SegmentError({ error, reset }: Readonly<ErrorProps>) {
         <button
           type="button"
           onClick={reset}
-          className="text-gold-600 transition-colors hover:underline"
+          className="text-accent transition-colors hover:underline"
         >
           Try again
         </button>
         <Link
           href="/"
-          className="text-gold-600 transition-colors hover:underline"
+          className="text-accent transition-colors hover:underline"
         >
           Back home →
         </Link>
