@@ -46,7 +46,9 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           date={post.date}
           readingTime={post.readingTime}
         />
-        <div className="prose prose-stone mt-10 max-w-none font-body dark:prose-invert">
+        {/* prose-neutral, not prose-stone: the v3 ramp is a neutral grey, and
+            stone's warm tint was tuned for the old parchment palette. */}
+        <div className="prose prose-neutral mt-10 max-w-none font-body dark:prose-invert">
           <Post />
         </div>
       </article>

@@ -76,33 +76,72 @@ if (!el) return
 
 ```tsx
 // ❌ Forbidden — arbitrary values
-<h1 className="text-[#1A1A18] text-[64px]">
+<h1 className="text-[#111111] text-[66px] max-w-[24ch]">
 
 // ✅ Correct — brand tokens
-<h1 className="text-ink-900 text-6xl font-display font-bold">
+<h1 className="font-display text-hero font-bold text-on-surface max-w-hero-head">
 ```
+
+This holds for **fluid values too**. If the design calls for
+`clamp(36px, 5.6vw, 66px)`, that becomes a `--text-*` token in `globals.css`, not
+`text-[clamp(...)]` in the markup (ADR-013). If a value genuinely has no token yet,
+add one — don't reach for brackets.
+
+The exception: values that land on Tailwind v4's numeric spacing scale are already
+tokens. `py-1.75`, `gap-5.5`, `min-w-7.5`, `px-6.5` are fine; don't invent a named
+token for something the scale expresses.
+
+### Prefer semantic roles over raw ramp stops
+
+```tsx
+// ❌ Breaks in dark mode — ink-50 is #FAFAFA in both themes
+<div className="hover:bg-ink-50">
+
+// ✅ Resolves per theme
+<div className="hover:bg-row-hover">
+```
+
+Raw stops (`ink-400`, `violet-200`) are legitimate for one-offs that genuinely
+don't change between modes. Anything that describes a *surface* or the text on one
+uses a semantic role.
 
 ### No inline styles unless motion animation values require it
 
 ```tsx
 // ❌ Forbidden
-<div style={{ backgroundColor: '#FAF6EE' }}>
+<div style={{ backgroundColor: '#FFFFFF' }}>
 
 // ✅ Correct
-<div className="bg-parchment-100">
+<div className="bg-surface">
 ```
+
+`next/og` images (`opengraph-image.tsx`, `apple-icon.tsx`) are the one exemption —
+Satori only reads inline styles, so the brand hexes are repeated there by
+necessity. Comment them as such.
 
 ### Class order convention (follow this for readability)
 Layout → Sizing → Spacing → Typography → Color → Border → Effects → Responsive → State
 
 ```tsx
 // Example
-<p className="flex items-center w-full px-4 py-2 text-base font-body text-ink-600 border border-ink-100 rounded-md hover:text-ink-900 md:px-6">
+<p className="flex items-center w-full px-4 py-2 font-body text-body text-on-surface-muted border border-hairline rounded-brand hover:text-on-surface md:px-6">
 ```
 
-### Responsive design — mobile first
+### Responsive design — prefer intrinsic layout to breakpoints
 
-Write base styles for mobile. Add breakpoint prefixes for larger screens.
+v3.1 has **no media queries**. Every two-column block is `auto-fit` with a `minmax`
+floor, so it collapses on its own when the content no longer fits:
+
+```tsx
+// ✅ Collapses to one column with no breakpoint
+<div className="grid grid-pair-entry items-start gap-entry-col">
+```
+
+The floors are declared as `@utility` classes in `globals.css` (`grid-pair-hero`,
+`grid-pair-entry`, `grid-pair-skills`, `grid-pair-post`, `grid-pair-contact`) —
+see `docs/design-system.md`.
+
+If you do need a breakpoint, write mobile first:
 
 ```tsx
 // ❌ Desktop first (don't do this)
@@ -111,6 +150,9 @@ Write base styles for mobile. Add breakpoint prefixes for larger screens.
 // ✅ Mobile first
 <div className="grid-cols-1 md:grid-cols-2">
 ```
+
+Check every change at **360, 768 and 1440**, and confirm there's no horizontal
+overflow at 360.
 
 ---
 

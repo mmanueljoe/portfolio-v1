@@ -32,13 +32,17 @@ portfolio/
 │   │   └── globals.css
 │   │
 │   ├── components/
-│   │   ├── layout/          ← Nav, Footer
-│   │   ├── sections/        ← Hero, About, Skills, Projects, Contact
-│   │   ├── ui/              ← Button, Badge, StackTag (small reusable primitives)
+│   │   ├── layout/          ← Nav, SiteFooter, ScrollProgress
+│   │   ├── sections/        ← Hero, Work, ProjectEntry, About, Skills, Writing
+│   │   ├── ui/              ← Wordmark, SectionHead, ButtonLink, TextLink,
+│   │   │                      Badge, Reveal, Stagger, ThemeToggle
 │   │   └── blog/            ← PostCard, PostHeader
 │   │
 │   ├── lib/
-│   │   └── blog.ts          ← MDX reading utilities
+│   │   ├── blog.ts          ← MDX reading utilities
+│   │   ├── nav.ts           ← nav links
+│   │   ├── projects.ts      ← project content
+│   │   └── site.ts          ← site-wide constants (url, title, CV path)
 │   │
 │   └── types/
 │       └── index.ts         ← shared TypeScript types
@@ -92,10 +96,13 @@ Every page defines its own metadata using the Next.js `metadata` export.
 
 ```tsx
 export const metadata: Metadata = {
-  title: 'Emmanuel Joe Benson — Software Engineer',
+  title: 'Emmanuel Joe Letsu · Software Engineer',
   description: '...',
 }
 ```
+
+Site-wide values (URL, title, description, CV path) live in `src/lib/site.ts` —
+read them from there rather than retyping the strings.
 
 ---
 
@@ -131,26 +138,37 @@ export function ProjectCard({ title, description, stack, githubUrl, mockupSrc }:
 
 ---
 
-## Section Backgrounds
+## Page Structure and Section Backgrounds
 
-Every section sits on the **single shared surface** — `bg-surface` /
-`text-on-surface`. There is no light/dark alternation between sections (dropped in
-ADR-010). The page is one continuous warm field; sections are separated by
-generous vertical space and, where needed, a hairline rule — never by background
-color blocks.
+Brand v3.1 (ADR-013). `src/app/page.tsx` stacks five sections; **Contact is the
+footer**, rendered by the root layout so `/blog` gets the same close.
 
 ```
-Hero        → bg-surface  text-on-surface
-Projects    → bg-surface  text-on-surface
-About       → bg-surface  text-on-surface
-Skills      → bg-surface  text-on-surface
-Contact     → bg-surface  text-on-surface
+Hero      → bg-surface      (no id — the page top)
+Work      → bg-surface      #work
+About     → bg-surface      #about
+Skills    → bg-surface-alt  #skills   ← the only inverted band, full-bleed
+Writing   → bg-surface      #writing
+Contact   → bg-surface      #contact  ← SiteFooter, in layout.tsx
 ```
 
-`surface-alt` is reserved for small raised elements (nav glass on scroll, footer,
-mockup frames), not section bands. Do **not** hard-code `bg-parchment-100` /
-`bg-ink-900` on sections — use the semantic classes. The page file just stacks the
-sections.
+Sections do **not** alternate. Skills is the single change of ground on the page;
+everything else is separated by space, a 2px `on-surface` rule under each section
+head, and 1px hairlines.
+
+Every section carries `px-gutter` and constrains its content to
+`mx-auto w-full max-w-page`. Do **not** hard-code raw palette classes on sections —
+use the semantic roles (`bg-surface`, `text-on-surface-alt`, …). See
+`docs/design-system.md` for the full role table.
+
+### Nav and footer
+
+- **Nav** is a flat bar with a `hairline` bottom border — a **Server Component**.
+  It wraps rather than collapsing into a drawer, so there's no menu state and no
+  `'use client'`. Links live in `src/lib/nav.ts` and are absolute (`/#work`) so
+  they work from `/blog` too.
+- **SiteFooter** is the contact section. `ContactSection` and the old `Footer`
+  merged into it (ADR-013).
 
 ---
 
@@ -185,19 +203,24 @@ resolved by a `@/content/*` tsconfig path.
 
 ## Animation Rules (motion)
 
-Animations are added in step 12 — after everything else is built and working.
+Implemented per ADR-012, adjusted by ADR-013.
 
 Allowed:
-- Entrance animations on scroll (fade up, fade in)
-- Smooth page transitions
-- Hover state transitions on interactive elements
-- Scroll progress indicator — a thin 2px gold-600 line fixed at the top of the viewport,
-  width driven by motion's useScroll hook. Added in step 12 with all other animations.
+- Entrance animations on scroll (fade up, fade in) — via `ui/Reveal`
+- Mount-sequenced entrances above the fold — via `ui/Stagger` + `StaggerItem`
+- Hover transitions on interactive elements: `colors` only, 150ms
+- Scroll progress indicator — a 2px **`on-surface`** line fixed at the top,
+  width driven by motion's `useScroll`. Black, not accent: violet would make it a
+  fifth accent element (ADR-013).
 
 Not allowed:
 - Spinning, bouncing, or looping animations
 - Animations that block content from being read
 - Layout animations that shift other elements
+- **Hover transforms** — no lifts, no scale, no shadow changes. The v3.1 design is
+  flat; the `whileHover={{ y: -6 }}` on project images was removed.
 
 All animated components are Client Components (`'use client'`).
 Wrap only the element being animated, not the whole section.
+Every primitive branches on `useReducedMotion()` and renders the resting state
+with no animated props when it's true.

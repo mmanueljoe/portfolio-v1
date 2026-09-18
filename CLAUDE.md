@@ -7,8 +7,13 @@ Follow everything here exactly. Do not deviate without being explicitly told to.
 
 ## Project
 
-Emmanuel Joe Benson's personal portfolio site.
-A minimal, typographic, production-grade Next.js site built to a precise design system.
+Emmanuel Joe Letsu's personal portfolio site.
+A typographic, production-grade Next.js site built to a precise design system.
+
+Currently on **brand v3.1** — white, neutral black, one violet accent, left-aligned
+document layout. This replaced the v1.0 gold/parchment system; read **ADR-013**
+before touching anything visual. Some older ADRs are superseded, so check the
+status line on an entry before trusting it.
 
 **Live brief:** `docs/project-brief.md`
 **Architecture rules:** `docs/architecture.md`
@@ -37,10 +42,15 @@ of these.
 - **Biome** for lint + format (one tool, replaces ESLint + Prettier). Config in
   `biome.json`.
 - **`motion`** (the renamed Framer Motion — `import { motion } from "motion/react"`).
-  Animations only, added last.
+  Reveals and the scroll bar only. No hover transforms.
+- **`next-themes`** for the light/dark toggle (ADR-008).
 - **`@next/mdx`** for the blog (local MDX files, `generateStaticParams`).
-- Lucide React (icons only — Github, Linkedin, Mail, Menu, X, ArrowRight)
+- Lucide React — **2 of 8 used** (`Sun`, `Moon`, in the theme toggle). The v3.1 nav
+  wraps instead of using a drawer, so `Menu`/`X` were freed.
 - `@tailwindcss/typography` (blog post body only)
+
+**Fonts:** DM Sans (display), Inter (body), **JetBrains Mono** (eyebrows, meta,
+dates, tags — added in v3.1).
 
 ---
 
@@ -48,7 +58,7 @@ of these.
 
 These are non-negotiable. If you are about to break one, stop and say so.
 
-1. **Never use arbitrary Tailwind values.** `text-[#C8924A]` is forbidden. Use tokens: `text-gold-600`.
+1. **Never use arbitrary Tailwind values.** `text-[#3B2A6B]` is forbidden — use `text-accent`. This includes fluid values: `text-[clamp(36px,5.6vw,66px)]` is forbidden, use `text-hero`. If no token exists, add one to `globals.css`.
 2. **Never use `any` in TypeScript.** If you don't know the type, derive it or ask.
 3. **Never put logic in a page file.** Pages are layout and composition only.
 4. **Never write a component longer than 150 lines.** Split it.
@@ -58,18 +68,21 @@ These are non-negotiable. If you are about to break one, stop and say so.
 8. **Never use `default export` for anything except page files and layout files.** Everything else is a named export.
 9. **No `console.log` in committed code.**
 10. **No commented-out code.** Delete it.
-11. **Never use more than 8 Lucide icons total.** Icons are functional, not decorative.
+11. **Never use more than 8 Lucide icons total.** Icons are functional, not decorative. Currently 2/8.
+12. **Never exceed four violet elements on a page.** They are spent: two wordmark stops, the hero headline stop, the primary button. Count them after any visual change.
 
 ---
 
 ## How to Work
 
+- The site is **built and deployed**. Work is now changes to existing sections, not
+  a first build — the build order in `docs/project-brief.md` is history.
 - Build one section or component at a time. Do not jump ahead.
-- Follow the build order in `docs/project-brief.md`.
-- After each component, check: is this mobile responsive? Does it use only brand tokens?
+- After each change, check: does it hold at 360 / 768 / 1440? Does it work in dark
+  mode? Does it use only tokens? Are there still only four violet elements?
 - If something in the brief is unclear, ask before building.
 - If you think a better pattern exists, say so explicitly — don't just do it silently.
-- Animations come last. Build the full static site first, then layer in `motion`.
+- Verify visual changes in the browser before reporting them done.
 
 ---
 

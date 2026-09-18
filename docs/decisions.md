@@ -94,7 +94,10 @@ choice. The `reactCompiler: true` flag lives in `next.config.ts`.
 ## ADR-004 — Tailwind CSS v4 (CSS-first config), superseding the v3 plan
 
 - **Date:** 2026-06-13
-- **Status:** Accepted — supersedes the Tailwind v3 setup in `docs/design-system.md`
+- **Status:** Accepted — supersedes the Tailwind v3 setup in `docs/design-system.md`.
+  The **mechanism** below still stands. The **token values** (ink / parchment /
+  gold) were replaced by brand v3.1 in ADR-013; read that entry for the current
+  palette.
 
 **Context.** `docs/design-system.md` was authored for **Tailwind v3**: a
 `tailwind.config.js` file exporting `theme.extend.colors` and
@@ -198,10 +201,15 @@ its own ADR when decided.
 ## ADR-008 — User-switchable dark mode
 
 - **Date:** 2026-06-13
-- **Status:** Accepted — supersedes parts of `design-system.md` "Light Mode vs
-  Dark Mode" and `architecture.md` "Section Alternation Pattern". Both sections
-  were rewritten to the semantic-token model below on 2026-06-13; they no longer
-  conflict with this ADR.
+- **Status:** Accepted — the **semantic-token mechanism** and the `next-themes`
+  wiring below are current. Three things in this entry are out of date: the
+  **token values** and the "`gold-600` stays constant" note were replaced by
+  ADR-013 (the accent now swaps to `violet-200` on dark, because `violet-600` is
+  too close to black to register); the **section alternation** was dropped by
+  ADR-010; and the **Lucide 8/8 ceiling** no longer holds — the v3.1 nav wraps
+  instead of using a drawer, freeing `Menu` and `X`, so usage is 2/8.
+- **Also superseded:** parts of `design-system.md` "Light Mode vs Dark Mode" and
+  `architecture.md` "Section Alternation Pattern".
 - **Visual reference:** the dark register was confirmed against a font/colour
   comparison mockup — near-black background, off-white text, gold accent, with a
   small elevation step between surfaces. Matches this spec.
@@ -418,9 +426,15 @@ stays fast as the repo grows.
 ## ADR-010 — Design direction: Apple's discipline, warmed up
 
 - **Date:** 2026-06-14
-- **Status:** Accepted — supersedes the **section-alternation** decision in ADR-008
-  (the dark-mode *toggle* from ADR-008 stays). Updates `design-system.md`
-  "Light Mode vs Dark Mode" and `architecture.md` "Section Backgrounds".
+- **Status:** **Superseded by ADR-013 (2026-09-18).** Kept for the reasoning trail
+  only — do not build from this entry. The warm parchment/gold register, the five
+  "Apple, warmed up" principles, the single-surface rule and the full-focus project
+  scenes were all replaced by brand v3.1. What survives, via ADR-013: no section
+  alternation *as rhythm* (v3.1 has exactly one inverted band, the Skills section),
+  and the dark-mode toggle from ADR-008.
+- **Superseded:** the **section-alternation** decision in ADR-008 (the dark-mode
+  *toggle* from ADR-008 stays). Updated `design-system.md` "Light Mode vs Dark
+  Mode" and `architecture.md` "Section Backgrounds".
 
 **Context.** The original docs styled the page as alternating light/dark section
 bands. Two problems surfaced once we had a real dark-mode toggle: (1) a dark band
@@ -479,7 +493,11 @@ spectacle would fight the room. Warmth supplies the humanity Apple lacks.
 
 - **Date:** 2026-06-15
 - **Status:** Accepted — implements brief step 12 and the "Animation Rules" section
-  of `architecture.md`. Installs `motion` per ADR-006.
+  of `architecture.md`. Installs `motion` per ADR-006. Two details changed in
+  ADR-013: the `ScrollProgress` bar is `on-surface`, not `gold-600` (it would have
+  been a fifth violet element), and the `whileHover={{ y: -6 }}` lift on project
+  images was dropped. `Reveal`, `Stagger` and the reduced-motion branch are
+  unchanged.
 
 **Context.** The static site was complete (steps 1–11). The brief defers animation
 to the very last build step and the design north star (ADR-010, "Apple's discipline,
@@ -537,3 +555,123 @@ who opted out gets zero motion, full stop.
   site; reduced-motion users are covered by the explicit branch above.
 - `ScrollProgress` sits at `z-50` (same as the nav). They don't overlap — the bar
   is at `top-0`, the nav pill at `top-4` — so no arbitrary z-index was needed.
+
+---
+
+## ADR-013 — Brand v3.1: white, neutral black, one violet accent
+
+- **Date:** 2026-09-18
+- **Status:** Accepted — **supersedes ADR-010 in full**. Replaces the palette
+  values (not the mechanism) in ADR-004 and ADR-008, and changes the
+  `ScrollProgress` colour decided in ADR-012.
+- **Source:** the `design_handoff_portfolio_v3/` bundle — `brand-guide-v3.html`
+  (palette, type, voice, logo rules, contrast table) and
+  `Portfolio Site - Redesign.dc.html` (the high-fidelity layout reference, every
+  style inline so the markup doubles as the spec).
+
+**Context.** The v1.0 site was built and deployed: gold/parchment palette, one calm
+surface, everything centred. Two problems showed up in use.
+
+First, **nothing was anchored.** Every section was `mx-auto max-w-* px-6 py-24` and
+three of five were `text-center`. Centred text has no left edge, so the eye has no
+rail to follow down the page — it floats. The type scale barely moved between
+sections either (hero `text-6xl`, project `text-4xl`, contact `text-4xl`, every
+section `py-24`), so nothing read as more important than anything else. ADR-010
+asked for "hierarchy from scale" and the execution didn't deliver it.
+
+Second, **there was no evidence.** Each project was compressed to a single
+sentence. The flagship had no screenshot and no working link, so it rendered an
+empty grey box. The reasoning that makes the work interesting — why USSD, why build
+the same board three times — existed in the repo READMEs and nowhere on the site.
+
+**Decision.** Adopt **brand v3.1** — a document, not a landing page.
+
+- **Palette.** White page, a neutral grey ramp (`ink-0` … `ink-900`), and a single
+  violet accent (`violet-600` on light, `violet-200` on dark). Parchment collapses
+  to one print-only token and is never rendered on screen. Three new semantic
+  roles: `accent`, `on-accent`, `hairline`.
+- **The four-accent rule.** At most four violet elements per page. Here they are
+  exactly: the nav wordmark stop, the hero headline stop, the primary button
+  background, the footer wordmark stop. Link hovers may go violet, since only one
+  hover exists at a time.
+- **Layout.** Left-aligned throughout, 1120px measure, `clamp()` gutters and
+  rhythm. 2px radius everywhere, 1px hairlines, a 2px rule under each section head.
+  No shadows, no gradients.
+- **Structure.** Hero → Work → About → Skills → Writing → Contact. "Projects"
+  becomes "Work" (`#work`), "Blog" becomes "Writing" (`#writing`, an on-page
+  section that links through to posts). Contact **is** the footer — `ContactSection`
+  and `Footer` merge into one `SiteFooter` in the root layout.
+- **One inverted band.** Skills sits on `surface-alt`, full-bleed. This is the only
+  place the page changes ground.
+- **Type.** DM Sans and Inter stay; **JetBrains Mono** joins for eyebrows, meta,
+  dates, numerals and tech tags. Fluid roles use the reference's exact `clamp()`
+  values.
+- **Content.** Each project gains two real paragraphs, a fact list (`MY PART`,
+  `THE HARD BIT`) and a tag row — the reasoning moves onto the page.
+
+**Why.** The problem was never that the site was too minimal; it was that minimal
+was doing no work. A left rail, a real type scale and a single inverted band give
+the page structure that centred stacking can't. The violet accent is rare enough to
+mean something, and the four-element budget is what keeps it that way. Neutral grey
+over warm parchment because the warmth was carrying a literary tone the content
+doesn't actually have — the work is systems work, and the page should read like a
+document, not a letterpress card.
+
+**Alternatives rejected.**
+- *Keep v1.0 and only fix the centring* — cheaper, but leaves the type scale flat
+  and the project copy empty. The layout wasn't the whole problem.
+- *Recolour only, keep the layout* — the palette was the smaller half; the
+  arrangement was what made it feel unfinished.
+- *Per-project case-study pages* — still the right long-term move for depth, and
+  the v3.1 entries are written so they can link out to one later. Out of scope for
+  this pass; the homepage entries had to carry real content first.
+
+**Consequences.**
+
+- **Every `gold-*` and `parchment-*` class is gone.** `text-gold-600` → `text-accent`,
+  `hover:text-parchment-100` → `hover:text-on-accent`, and so on. `icon.svg`,
+  `apple-icon.tsx` and `opengraph-image.tsx` were regenerated in the new palette.
+- **Deleted:** `ContactSection`, `ProjectsSection`, `ProjectScene`, `Footer`,
+  `SectionLabel`. **Added:** `WorkSection`, `ProjectEntry`, `WritingSection`,
+  `SiteFooter`, `SectionHead`, `Wordmark`, `ButtonLink`, `TextLink`.
+- **`PostCard` is now the single writing row**, used by both `/blog` and the on-page
+  Writing section, so the two can't drift apart.
+- **The `Project` type changed shape** — `kicker`/`title`/`body`/`facts`/`stack`/
+  `imageSrc`/`imageAlt`, replacing `line`/`meta`/`liveHref`/`mockupSrc`.
+- **Earned Wage Access (Wagr) was removed** from the project list and replaced by
+  Ping. Recorded as a deliberate editorial choice, not an oversight — though it
+  leaves the list without the project that has the hardest engineering in it (BFF
+  auth, integer minor units, idempotency keys, a business invariant enforced by a
+  partial unique index). Worth revisiting.
+- **The nav is a flat bar, not a floating pill**, and is now a Server Component —
+  it wraps instead of collapsing into a drawer, so the `useState` menu is gone.
+  That frees `Menu` and `X` from the Lucide budget, taking it from 8/8 to **2/8**
+  (`Sun`, `Moon`). ADR-008's "zero headroom" warning no longer applies.
+- **`ScrollProgress` is `on-surface`, not `accent`.** The handoff said to restyle it
+  to accent, but its own final check says remove one element if the page exceeds
+  four violets — and with the bar violet it had five. The layout reference has no
+  progress bar at all. Black keeps the feature, respects the budget, and matches
+  the 2px rules the page is built on. This overrides the `gold-600` bar in ADR-012.
+
+**Two implementation decisions worth recording.**
+
+1. **Fluid values became named theme tokens, not arbitrary Tailwind values.** The
+   handoff suggested expressing `clamp()` through arbitrary-value syntax, which
+   collides head-on with Hard Rule #1. Instead every size, measure, rhythm and
+   radius is a `@theme` token — `text-hero`, `max-w-prose`, `py-section`,
+   `gap-entry`, `rounded-brand` — and the five `auto-fit` grids are `@utility`
+   classes (`grid-pair-entry` and friends). Same rendered values, zero arbitrary
+   classes, and the scale stays readable as a system. Values that land on Tailwind
+   v4's numeric spacing scale (`py-1.75`, `gap-5.5`, `min-w-7.5`) use it directly
+   rather than inventing a token.
+2. **Two extra semantic roles: `row-hover` and `shot-bed`.** The handoff specifies
+   `#FAFAFA` for the writing-row hover and the screenshot bed. Taken literally as
+   `ink-50`, both would flash white on a black page in dark mode. They resolve to
+   `#1A1A1A` in dark instead. Similarly the Skills meta uses `ink-400` (`#9E9E9E`)
+   rather than `on-surface-alt-muted`, matching the reference and sitting a step
+   quieter than the values beside it.
+
+**Verified.** Clean `pnpm build` and `biome check`. Checked in-browser at 1440,
+768 and 360 in both themes: no horizontal overflow at any width, the Skills band
+still separates from the page in dark mode (`#1A1A1A` on `#111111`, deliberately
+subtle), and a DOM audit confirms exactly four violet elements.

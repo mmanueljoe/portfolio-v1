@@ -1,17 +1,24 @@
 # Project Brief
 
-Emmanuel Joe Benson's personal portfolio site. Every decision has been made here.
+Emmanuel Joe Letsu's personal portfolio site. Every decision has been made here.
 Open this at the start of every build session.
+
+> **Brand v3.1 (September 2026).** The site was rebuilt onto a new brand — white,
+> neutral black, one violet accent, left-aligned document layout. The section specs
+> below are current as of that rebuild. See **ADR-013** in `docs/decisions.md` for
+> what changed and why, and `docs/design-system.md` for every value.
 
 ---
 
 ## Identity
 
-- **Name on site:** Emmanuel Joe Benson
+- **Name on site:** Emmanuel Joe Letsu
+- **Wordmark:** `Joe.` — the full stop is always the violet accent
 - **Title:** Software Engineer
+- **Location:** Accra, Ghana
 - **Email:** emmanuelletsu18@gmail.com
 - **GitHub:** github.com/mmanueljoe
-- **LinkedIn:** linkedin.com/in/emmanuel-letsu
+- **LinkedIn:** linkedin.com/in/mmanueljoe
 
 ---
 
@@ -27,241 +34,188 @@ yoursite.com/blog/[slug]  → individual blog post
 
 ## Navigation
 
-- **Centered floating pill** ("island") — a rounded glass nav floating top-centre,
-  reinforcing the page's centred spine (ADR-010). Glass always (`backdrop-blur`,
-  `surface` at 80%, hairline border), since it floats over content.
-- **Monogram** `EJB` on the left (links to top); the full wordmark lives in the Hero.
-- **Links:** About · Skills · Projects · Blog · Contact, plus the theme toggle.
-- **Mobile:** the pill itself expands downward into a stacked menu on tap, then
-  collapses — the island used functionally, not as a separate drawer.
+- **Flat full-width bar** with a 1px `hairline` bottom border, content constrained
+  to 1120px, 20px vertical padding. Not a floating pill, not glass.
+- **Wordmark** `Joe.` on the left, links to top.
+- **Links:** Work · About · Skills · Writing · Contact, then the "OPEN TO WORK"
+  pill and the theme toggle.
+- **The pill:** 1px hairline border, 2px radius, a **black** 6px dot (violet would
+  break the four-accent budget), mono `OPEN TO WORK` label.
+- **Mobile:** the bar **wraps** onto more rows. No drawer, no menu state — which is
+  why `Nav` is a Server Component.
 
 ---
 
 ## Build Order
 
-Follow this exactly. Do not skip ahead.
+Steps 1–14 are **complete**; the site is built and deployed. The v3.1 rebuild
+(ADR-013) re-ran steps 1 and 4–9 on the new brand.
 
 ```
-1.  Project setup + Tailwind brand tokens
-2.  Font imports in layout.tsx
-3.  Global CSS base styles
-4.  Nav component (static first, glass effect second)
-5.  Hero section
-6.  Projects section
-7.  About section
-8.  Skills section
-9.  Contact section
-10. Blog listing page (/blog)
-11. Blog post page (/blog/[slug])
-12. motion animations (add last, after all sections are done)
-13. Mobile responsive pass (check at every step, final check here)
-14. Deploy to Vercel
+1.  Project setup + Tailwind brand tokens          ✅ (rebuilt, v3.1)
+2.  Font imports in layout.tsx                     ✅ (+ JetBrains Mono, v3.1)
+3.  Global CSS base styles                         ✅
+4.  Nav component                                  ✅ (rebuilt as a flat bar)
+5.  Hero section                                   ✅ (rebuilt, left-aligned)
+6.  Work section (was Projects)                    ✅ (rebuilt)
+7.  About section                                  ✅ (rebuilt, two columns)
+8.  Skills section                                 ✅ (rebuilt, inverted band)
+9.  Contact                                        ✅ (merged into SiteFooter)
+10. Blog listing page (/blog)                      ✅
+11. Blog post page (/blog/[slug])                  ✅
+12. motion animations                              ✅
+13. Mobile responsive pass                         ✅ (360 / 768 / 1440)
+14. Deploy to Vercel                               ✅
 ```
+
+**Writing** (`#writing`) was added in v3.1 — an on-page section listing posts,
+which links through to `/blog/[slug]`.
 
 ---
 
 ## Section Specs
 
+
+Copy is final — it lives in `src/lib/projects.ts` and the section components.
+**All visual values live in `docs/design-system.md`**; this file describes intent
+and content, not pixels.
+
 ### Hero
 
-Full viewport height. Purely typographic — no image, no illustration.
+Left-aligned, not centred. Not full viewport height.
 
-**Layout:**
 ```
-[Availability badge]  Open to work  •
+EMMANUEL JOE LETSU, SOFTWARE ENGINEER, ACCRA        ← mono eyebrow
 
-Emmanuel Joe Benson
-Software Engineer
-I build full-stack web applications that are well-engineered
-and considered, from the API to the interface.
+I build software the way I'd want to inherit it.    ← the stop is violet
 
-[CTA]  View my work →
-
-[Links]  GitHub  ·  LinkedIn  ·  Email
+Full stack, from the API to the     [SEE THE WORK] [DOWNLOAD CV]
+interface. I care about the parts   GitHub  LinkedIn  Email
+nobody sees, because that's
+usually where the trouble starts.
 ```
 
-**Styles:**
-- Background: `parchment-100` (`#FAF6EE`)
-- Name: `font-display`, weight 700, 56–64px, `ink-900`
-- Title: `font-body`, weight 400, `ink-600`
-- Tagline: `font-body`, weight 300, `ink-400`
-- CTA button: `ink-900` bg, `parchment-200` text — on hover: `gold-600` bg
-- Badge: small gold dot + Inter label, `gold-600`
-- Vertically centred, full viewport height
+The lede and the button/social stack sit in a two-column row, bottom-aligned.
+`SEE THE WORK` is the primary (violet) button — one of the four accent elements.
 
 ---
 
-### Projects
+### Selected work (`#work`)
 
-Three projects. Browser mockup image + name + description + stack tags + links.
-Mockups: screenshot project in browser, upload to Shots.so, download framed image.
+Three entries. Each is a two-column grid: screenshot left, text right. Order:
+mono kicker (`01 / PROFESSIONAL`), title, two body paragraphs, a fact list, then
+a tag row with any links.
 
----
+Screenshots are `object-contain` on a 16/10 bed — they have different aspect
+ratios and `cover` crops them badly.
 
-**Project 1 — EWA (Earned Wage Access)**
+| # | Kicker | Title | Image |
+|---|---|---|---|
+| 01 | PROFESSIONAL | Putting the right person on the right project | `rms.png` |
+| 02 | TEAM PRODUCT | Ping, a notice board for a neighbourhood | `ping-home.png` |
+| 03 | ON PURPOSE | The same board, three times | `kanban.png` |
 
-Earned wage access is a simple idea: workers should be able to access money they have already
-earned before payday. For Ghanaian SMEs, where cash flow pressure is real and formal credit is
-largely inaccessible, that matters practically.
+Each entry carries **two facts** — a `MY PART` / `MY ROLE` / `FINDING` line and a
+second that says what was hard or what it taught. That second line is the point of
+the section: it's what makes the work legible as engineering judgement rather than
+a list of features.
 
-The product has three moving parts: a USSD flow so workers on basic phones can request advances
-without a smartphone, an employer dashboard for payroll management and advance approvals, and an
-AI-powered payslip processor that extracts and structures payroll data automatically.
-
-The employer dashboard is live. USSD integration is in active development.
-
-- Stack: Next.js · Node.js · TypeScript · PostgreSQL · Moolre API
-- Status: In active development
-- Link: [add when ready]
-
----
-
-**Project 2 — Amalitech Resource Management**
-
-A resource and staffing management platform for a technology services company operating across
-multiple markets. The platform handles project staffing, resource allocation, and project
-management across both client-facing and internal teams.
-
-Joined an existing production codebase as part of a cross-functional agile team. Contributions:
-integrated an AI-powered recommendation system on the frontend that matches available staff to
-open project roles, and built features for the analytics dashboard and resource overview that
-gave managers visibility into allocation across the organisation.
-
-- Stack: React · TypeScript · Node.js · REST APIs
-- Type: Professional contribution
+**Earned Wage Access (Wagr) was removed in v3.1.** Recorded in ADR-013 as a
+deliberate editorial call, with the note that it leaves the list without the
+project that has the hardest engineering in it. Worth revisiting.
 
 ---
 
-**Project 3 — Kanban Task Manager**
+### About (`#about`)
 
-Most developers build a kanban board once. This one was built three times, on purpose.
+Two columns. Left: a pull quote in DM Sans plus one supporting paragraph. Right:
+four paragraphs, the last in full `on-surface` so it lands.
 
-The first version used the Context API. The second used Redux. The third used Zustand. Same
-product, same features, three different state management architectures. The goal was not to ship
-a kanban board. It was to understand, at a mechanical level, what the tradeoffs actually are
-between these approaches and when each one earns its complexity.
+> I don't separate technical skill from human understanding. They're the same
+> thing, said differently.
 
-Zustand won for this scale. The reasoning is in the README.
+The closing line is: *"Right now the deep part is AI. I'm headed into a Master's in
+it next."*
 
-- Stack: React · TypeScript · Zustand · Context API
-- Link: github.com/mmanueljoe/kanban-task-manager-zustand
-
----
-
-**Styles:**
-- Background: `ink-900`
-- Project name: `font-display`, weight 600, `parchment-200`
-- Description: `font-body`, weight 400, `parchment-800`
-- Stack tags: `font-body`, weight 500, small, `ink-800` bg, `parchment-200` text
-- Links: `gold-600`, hover underline
-- Images: full container width, rounded corners, subtle shadow
+Left-aligned, ragged right. The old `text-justify hyphens-auto` was dropped —
+justified text on the web makes uneven word-spacing rivers.
 
 ---
 
-### About
+### Skills (`#skills`)
 
-Single column, text only. No image.
+**The only inverted section** — `surface-alt`, full-bleed. Meta reads
+`SORTED HONESTLY`.
 
-**Copy (use exactly):**
+Five rows, tiered by honest depth. No logos, no progress bars, no percentages.
 
-I'm a software engineer with a particular way of working. Careful, systems-oriented, and always
-thinking about the person on the other side of what I'm building. I work across the stack, from
-interfaces to APIs, and I bring the same standard to both.
-
-I don't separate technical skill from human understanding. I think they're the same thing,
-expressed differently. The best interfaces are backed by well-structured systems. The best
-systems were designed with someone's real workflow in mind. I try to hold both at once.
-
-I've contributed to production codebases in cross-functional agile teams, built financial
-technology products solving real access problems in the Ghanaian market, and spent serious time
-understanding the tradeoffs behind the tools I use. I have a wide range of interests and a
-genuine tendency to go deep rather than wide.
-
-I'm building toward the intersection of software and intelligence. That's where I'm headed.
-
-**Styles:**
-- Background: `ink-900`
-- Section label above copy: `font-body`, weight 500, uppercase, letter-spaced, `gold-600`
-- Body text: `font-body`, weight 400, 15–16px, `parchment-200`
-- Max width: 640–720px, centred
-- Generous padding top and bottom
-
----
-
-### Skills
-
-Text only. Tiered by depth. No logos, no progress bars.
-
-**Content:**
 ```
 Shipping with     React · Next.js · TypeScript · Node.js · PostgreSQL ·
-                  Tailwind CSS · REST API design · JWT Authentication · Git · Vercel
+                  Tailwind CSS · REST API design · JWT authentication · Git · Vercel
 
 Comfortable with  Vue 3 · Express.js · GraphQL · MongoDB · MySQL ·
                   Docker · Zustand · Context API · Figma · Postman
 
-Certified         AWS Cloud Practitioner (2025)
+Certified         AWS Cloud Practitioner, 2025
 
 Exploring         AI/ML fundamentals · GraphQL subscriptions · Advanced PostgreSQL
 
 Also worked with  Solidity · Motoko · ICP · Web3.js
 ```
 
-**Styles:**
-- Background: `parchment-100`
-- Category label: `font-display`, weight 600, `ink-900`
-- Skills text: `font-body`, weight 400, `ink-600`
-- Two columns on desktop, single column on mobile
+Hairlines go on each **row**, not the list container — a container background
+showing through a grid `gap` leaves a visible plate when `auto-fit` resolves to a
+column count that doesn't divide the row count.
 
 ---
 
-### Contact
+### Writing (`#writing`)
 
-Centred. Heading, subline, three links. No form.
+Section meta reads `WHEN I'VE LEARNT SOMETHING`. One row per post: mono date
+(`2026.06.10`) and title on the left, description on the right. Rows fill
+`row-hover` on hover and link to `/blog/[slug]`.
 
-**Content:**
-```
-Get in touch
+While there is exactly one post, a line below reads *"One post so far. The list
+earns its place as it grows."*
 
-I'm open to full-stack engineering roles, interesting products,
-and problems worth solving. Remote or Ghana-based.
-Reach out directly.
+Posts come from `getAllPosts()`. The row is `components/blog/PostCard` — the same
+component `/blog` uses, so the two lists can't drift apart.
 
-emmanuelletsu18@gmail.com
-github.com/mmanueljoe
-linkedin.com/in/emmanuel-letsu
-```
+---
 
-**Styles:**
-- Background: `parchment-100`
-- Heading: `font-display`, weight 700, large, `ink-900`
-- Subline: `font-body`, weight 400, `ink-600`
-- Links: `gold-600`, hover underline
-- Centred, generous vertical padding
+### Contact (`#contact`) — the footer
+
+The footer **is** the contact section; there is no separate `ContactSection`. It
+lives in the root layout, so `/blog` gets the same close.
+
+Left: heading *"Tell me what's broken."*, a paragraph, then an outlined button
+whose label is the email address itself. Right: two mono-labelled blocks —
+`ELSEWHERE` (GitHub, LinkedIn, CV PDF) and `WHERE` (Accra, Ghana. GMT, and
+comfortable with European and US hours).
+
+Bottom bar: the `Joe.` wordmark left, `© <year> EMMANUEL JOE LETSU` right.
 
 ---
 
 ## Blog
 
 **`/blog` — listing page**
-- Post title, date, one-line description per post
-- Same nav as main site
+- Same rows as the on-page Writing section (`PostCard`)
 - No sidebar, no categories yet
 
 **`/blog/[slug]` — post page**
 - Title, date, reading time
-- Body: Inter, 65–75 character line length
-- Use `@tailwindcss/typography` for body styling
+- Body uses `@tailwindcss/typography` (`prose prose-neutral dark:prose-invert`)
 - No comments
 
-Blog posts are MDX files stored in `content/blog/`.
-At least one post must exist before launch.
+Blog posts are MDX files in `content/blog/`. Frontmatter per ADR-011.
 
 ---
 
-## Still To Decide Before Launch
+## Still To Decide
 
 - [ ] Domain name (`joeemmanuel.dev` or similar)
-- [ ] EWA live link — add to project when ready
-- [ ] Project screenshots for Shots.so mockups
-- [ ] First blog post (written and ready before deploy)
+- [ ] Whether Wagr returns to the work list (see ADR-013)
+- [ ] Per-project case-study pages (`/work/[slug]`) — the v3.1 entries are written
+      so they can link out to one later
+- [ ] A second blog post, so the Writing list stops needing its apology line

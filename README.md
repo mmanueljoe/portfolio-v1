@@ -1,11 +1,12 @@
-# Emmanuel Joe Benson — Portfolio
+# Emmanuel Joe Letsu — Portfolio
 
-A minimal, typographic personal portfolio built to a precise design system.
-Single scrolling page plus an MDX blog. Production-grade by intent, not a template.
+A typographic personal portfolio built to a precise design system. Single
+scrolling page plus an MDX blog. Production-grade by intent, not a template.
 
-> **Status:** in active development, built section by section per
-> [`docs/project-brief.md`](docs/project-brief.md). Not all build steps below are
-> wired yet — the dependency list reflects what's installed today.
+> **Status:** built and deployed. Currently on **brand v3.1** — white, neutral
+> black, one violet accent, left-aligned document layout. See
+> [ADR-013](docs/decisions.md) for the migration off the v1.0 gold/parchment
+> system, and [`docs/design-system.md`](docs/design-system.md) for every value.
 
 ---
 
@@ -17,14 +18,16 @@ Single scrolling page plus an MDX blog. Production-grade by intent, not a templa
 | UI | React 19 + React Compiler | auto-memoization; avoid manual `useMemo`/`useCallback` |
 | Language | TypeScript (strict) | no `any` |
 | Styling | Tailwind CSS v4 | CSS-first config in `globals.css`, no `tailwind.config.js` |
-| Fonts | DM Sans + Inter | self-hosted via `next/font` |
+| Fonts | DM Sans + Inter + JetBrains Mono | self-hosted via `next/font` |
+| Theming | `next-themes` | class-based light/dark, no flash |
 | Lint + format | Biome | one tool, replaces ESLint + Prettier |
 | Git hooks | husky + lint-staged + commitlint | format staged files, enforce Conventional Commits |
-| Blog _(planned)_ | `@next/mdx` | local MDX in `content/blog/` |
-| Animation _(planned)_ | `motion` | added last |
+| Blog | `@next/mdx` + `gray-matter` | local MDX in `content/blog/` |
+| Animation | `motion` | reveals only, reduced-motion respected |
 
 Every choice has a recorded rationale in [`docs/decisions.md`](docs/decisions.md)
-(ADR-001 to ADR-009). Read it before changing any of them.
+(ADR-001 to ADR-013). Read it before changing any of them — ADR-010 is superseded
+by ADR-013, so check status lines before trusting an entry.
 
 ---
 
@@ -61,10 +64,10 @@ Conventional Commits.
 ```
 content/blog/   MDX blog posts (one file per post)
 docs/           project brief, architecture, standards, design system, ADRs
-public/         static assets and project mockups
-src/app/        App Router pages + globals.css
+public/         static assets and project screenshots
+src/app/        App Router pages + globals.css (all design tokens)
 src/components/ layout, sections, ui, blog
-src/lib/        MDX reading utilities
+src/lib/        blog reading, nav links, project content, site constants
 src/types/      shared types
 ```
 
@@ -74,8 +77,10 @@ Full folder rules: [`docs/architecture.md`](docs/architecture.md).
 
 ## Conventions
 
-- **Design tokens only** — no arbitrary Tailwind values (`text-gold-600`, never
-  `text-[#C8924A]`). Palette and semantic surface tokens live in `globals.css`.
+- **Design tokens only** — no arbitrary Tailwind values (`text-accent`, never
+  `text-[#3B2A6B]`; `text-hero`, never `text-[clamp(...)]`). Palette, type scale,
+  measures and spacing all live in `globals.css`.
+- **Four violet elements per page**, no more. Count them after any visual change.
 - **Commits** follow Conventional Commits (`feat(scope): …`), checked by commitlint.
 - The full rule set lives in [`docs/coding-standards.md`](docs/coding-standards.md)
   and [`docs/design-system.md`](docs/design-system.md).
@@ -84,13 +89,14 @@ Full folder rules: [`docs/architecture.md`](docs/architecture.md).
 
 ## Deployment
 
-Targets [Vercel](https://vercel.com) (build step 14, not yet live). Once set up,
-pushes to `main` trigger a build — no separate CI is configured (see ADR-009).
+Deployed on [Vercel](https://vercel.com). Pushes to `main` trigger a build — no
+separate CI is configured (see ADR-009). The canonical site URL is derived from
+`VERCEL_PROJECT_PRODUCTION_URL` in `src/lib/site.ts`.
 
 ---
 
 ## Author
 
-**Emmanuel Joe Benson** — Software Engineer
+**Emmanuel Joe Letsu** — Software Engineer
 [GitHub](https://github.com/mmanueljoe) ·
-[LinkedIn](https://linkedin.com/in/emmanuel-letsu)
+[LinkedIn](https://linkedin.com/in/mmanueljoe)

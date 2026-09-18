@@ -1,122 +1,136 @@
 # Design System
 
-Single source of truth for all visual decisions.
+Brand **v3.1** (September 2026). Single source of truth for all visual decisions.
 Every colour, font, and spacing value used in this project lives here.
 Never hardcode a value that exists in this document.
+
+> Supersedes the v1.0 gold/parchment system. See **ADR-013** in `docs/decisions.md`
+> for why it changed and what it replaced. The reference bundle
+> (`brand-guide-v3.html` and `Portfolio Site - Redesign.dc.html`) is the origin of
+> every value below.
 
 ---
 
 ## Design Principles
 
-The north star for every visual decision: **Apple's discipline, warmed up** —
-Apple's focus, space, and restraint applied to a warm, literary palette instead
-of a cold, clinical one. When a section decision is unclear, it obeys these five
-before anything else. See ADR-010 for why.
+The page is a **document, not a landing page**. Five rules decide anything this
+doc doesn't cover:
 
-1. **Reduce until only the essential is left.** Each section does exactly one
-   job. If an element isn't carrying its weight, remove it — don't shrink it.
+1. **Anchor everything to a left rail.** Content is left-aligned. Centred text has
+   no left edge, so the eye has nothing to follow down the page. The 1120px measure
+   is centred; the content inside it is not.
 
-2. **Space is a material, not emptiness.** Whitespace is placed deliberately.
-   Don't fill the page; the calm *is* the design, and it reads as confidence.
+2. **Hierarchy comes from scale, and the scale must actually move.** A hero at 66px
+   and a section head at 32px are different *kinds* of thing. If two elements are
+   near the same size, one of them is wrong.
 
-3. **Hierarchy from scale, not decoration.** Importance comes from size and
-   weight — never from boxes, borders, or badges. The type carries the page.
+3. **Structure comes from rules and space, not boxes.** A 2px rule under a section
+   head, a 1px hairline between rows. No cards, no shadows, no gradients, no large
+   radii.
 
-4. **The design defers to the content.** The parchment surface is a quiet stage;
-   the work and the writing are the stars. The UI never shows off over them.
+4. **The accent is rare or it is nothing.** Four violet elements per page. That
+   scarcity is the entire reason violet reads as deliberate.
 
-5. **Say little, confidently.** Short, declarative copy. This is the one place we
-   soften Apple — keep Emmanuel's reflective, human voice, just tighter. State,
+5. **Say little, confidently.** Short, declarative copy in Emmanuel's voice. State,
    don't oversell.
 
-**The cost:** minimalism is unforgiving. With less on screen, every remaining
-element must be precise — spacing rhythm, alignment, type. Minimal is not less
-work; it is less stuff, executed more carefully.
-
-**What we deliberately do NOT take from Apple:** cinematic scroll-jacking and
-marketing-speak. A visitor skims in ~30 seconds — the site stays fast, scannable,
-and honest in voice.
+**The cost:** with this little decoration, every remaining element must be precise.
+Spacing rhythm, alignment and type carry the whole page.
 
 ---
 
 ## Colour Palette
 
-Three colour families. Everything is built from these.
+Two ramps and one accent. Everything is built from these.
 
-### Ink (warm blacks and greys)
-
-| Token | Hex | Use |
-|---|---|---|
-| `ink-50` | `#F5F3F0` | Hover tints |
-| `ink-100` | `#E0DDD8` | Borders |
-| `ink-200` | `#B8B4AE` | Disabled states |
-| `ink-400` | `#888480` | Muted text |
-| `ink-600` | `#555250` | Body text |
-| `ink-800` | `#2E2C2A` | Headlines |
-| `ink-900` | `#1A1A18` | Core — primary dark, dark section backgrounds |
-
-### Parchment (warm off-whites)
+### Ink (neutral greys — does ~96% of the work)
 
 | Token | Hex | Use |
 |---|---|---|
-| `parchment-50` | `#FDFBF7` | Near white |
-| `parchment-100` | `#FAF6EE` | Page backgrounds, light section backgrounds |
-| `parchment-200` | `#F2EBD9` | Core — primary parchment, text on dark backgrounds |
-| `parchment-300` | `#E8DFC8` | Cards and surfaces |
-| `parchment-400` | `#D8CDB0` | Dividers |
-| `parchment-600` | `#C0B090` | Borders on dark backgrounds |
-| `parchment-800` | `#8A7A60` | Muted text on dark backgrounds |
+| `ink-0` | `#FFFFFF` | Page |
+| `ink-50` | `#FAFAFA` | Surface, row hover, screenshot bed |
+| `ink-100` | `#F2F2F2` | Hover |
+| `ink-200` | `#E4E4E4` | Border |
+| `ink-300` | `#C9C9C9` | Divider, muted text on dark |
+| `ink-400` | `#9E9E9E` | Disabled, meta on the dark band |
+| `ink-500` | `#6E6E6E` | Muted text — captions only, never paragraphs |
+| `ink-600` | `#4A4A4A` | Body text |
+| `ink-700` | `#2C2C2C` | Heading |
+| `ink-800` | `#1A1A1A` | Dark elevation |
+| `ink-900` | `#111111` | Black |
 
-### Gold (accent — use sparingly)
+### Violet (accent — use sparingly)
 
 | Token | Hex | Use |
 |---|---|---|
-| `gold-50` | `#FDF4E8` | Subtle background tint |
-| `gold-100` | `#F5DFB0` | Light fill |
-| `gold-200` | `#E8C070` | Highlight |
-| `gold-400` | `#D4A853` | Hover state |
-| `gold-600` | `#C8924A` | Core — primary accent, CTAs, links, badges |
-| `gold-800` | `#A06A28` | Gold on light backgrounds |
-| `gold-900` | `#704A18` | Deep shadow |
+| `violet-50` | `#F3F1FA` | |
+| `violet-100` | `#E3DFF2` | Accent hover on dark |
+| `violet-200` | `#C4BCE4` | **The accent in dark mode**, `::selection` |
+| `violet-300` | `#A296D2` | |
+| `violet-400` | `#7E6FBD` | |
+| `violet-500` | `#5E4E9E` | |
+| `violet-600` | `#3B2A6B` | **The accent in light mode** |
+| `violet-700` | `#2F2156` | |
+| `violet-800` | `#241940` | Accent hover on light |
+| `violet-900` | `#18112B` | |
 
-### The Gold Rule
+### Parchment (print only)
 
-**One gold accent per layout section. Two at most.** Gold works because it's rare. Use it on:
-- The primary CTA button hover state
-- Link hover underlines
-- The availability badge
-- Section label text
+| Token | Hex | Use |
+|---|---|---|
+| `parchment` | `#F2EBD9` | **Print only. Never render on screen.** |
 
-Never use gold as a background. Never on multiple elements at once.
+### The Four-Accent Rule
+
+**At most four violet elements per page.** On the home page they are exactly:
+
+1. The nav wordmark stop
+2. The hero headline stop
+3. The primary button background
+4. The footer wordmark stop
+
+Do not add a fifth. Link hovers may go violet, because only one hover exists at a
+time. The "open to work" dot is **black, not violet** — it would break the budget.
+The scroll progress bar is `on-surface` for the same reason (ADR-013).
+
+After any visual change, count them.
+
+### Contrast (calculated)
+
+Black on white 18.9:1 · `#4A4A4A` on white 8.9:1 · `#6E6E6E` on white 4.6:1
+(captions only) · violet on white 12.3:1 · white on violet 12.3:1 · `#C9C9C9` on
+black 11.5:1 · `#C4BCE4` on black 10.6:1 · `#9E9E9E` on black 7.1:1.
 
 ---
 
-## Light Mode vs Dark Mode
+## Semantic Roles
 
-Dark mode is a **user-switchable theme** (toggle in the nav). See ADR-008 for the
-toggle wiring and ADR-010 for why sections no longer alternate.
+**Components use these, never raw ramp stops**, so the light/dark swap happens in
+one place. Declared in `globals.css` via `@theme inline` (ADR-008).
 
-**Every section sits on a single shared surface.** Per the design principles (one
-calm surface, no competing bands), sections all use `bg-surface` /
-`text-on-surface` — there is no light/dark alternation between them. The page
-reads as one continuous warm field; separation comes from space and hairline
-rules, not background blocks.
-
-The semantic roles still exist and resolve per mode:
-
-| Role | Light mode | Dark mode | Used for |
+| Role | Light | Dark | Used for |
 |---|---|---|---|
-| `surface` | `parchment-100` `#FAF6EE` | `ink-900` `#1A1A18` | every section background |
-| `on-surface` | `ink-900` `#1A1A18` | `parchment-200` `#F2EBD9` | primary text |
-| `on-surface-muted` | `ink-600` `#555250` | `parchment-800` `#8A7A60` | secondary text |
-| `surface-alt` | `parchment-300` `#E8DFC8` | `ink-800` `#2E2C2A` | subtle elevation only |
-| `on-surface-alt` | `ink-900` `#1A1A18` | `parchment-200` `#F2EBD9` | text on elevated surfaces |
-| `on-surface-alt-muted` | `ink-600` `#555250` | `parchment-800` `#8A7A60` | muted text on elevated surfaces |
+| `surface` | `#FFFFFF` | `#111111` | Page and section backgrounds |
+| `on-surface` | `#111111` | `#FFFFFF` | Primary text, 2px rules |
+| `on-surface-muted` | `#4A4A4A` | `#C9C9C9` | Body and secondary text |
+| `surface-alt` | `#111111` | `#1A1A1A` | The Skills band only |
+| `on-surface-alt` | `#FFFFFF` | `#FFFFFF` | Text on the band |
+| `on-surface-alt-muted` | `#C9C9C9` | `#9E9E9E` | Muted text on the band |
+| `accent` | `#3B2A6B` | `#C4BCE4` | The four violet elements |
+| `accent-hover` | `#241940` | `#E3DFF2` | Primary button hover |
+| `on-accent` | `#FFFFFF` | `#111111` | Text on the accent fill |
+| `hairline` | `#E4E4E4` | `#4A4A4A` | 1px borders |
+| `hairline-alt` | `#4A4A4A` | `#4A4A4A` | 1px borders inside the band |
+| `row-hover` | `#FAFAFA` | `#1A1A1A` | Writing row hover fill |
+| `shot-bed` | `#FAFAFA` | `#1A1A1A` | Behind a contained screenshot |
 
-`surface-alt` is now an **elevation** token for small raised elements (a card, the
-nav glass on scroll, the footer, mockup frames) — *not* a full-section band.
-`gold-600` stays constant across both modes. Raw palette tokens still exist for
-one-off uses, but section backgrounds and their text use the semantic roles above.
+`row-hover` and `shot-bed` exist because the reference's literal `#FAFAFA` would
+flash white on a black page (ADR-013). The accent **swaps** between modes —
+`violet-600` is too close to black to register on a dark surface.
+
+**Sections do not alternate.** Exactly one section — Skills — sits on
+`surface-alt`, full-bleed. That single inversion is the page's one change of
+ground.
 
 ---
 
@@ -124,166 +138,228 @@ one-off uses, but section backgrounds and their text use the semantic roles abov
 
 ### Fonts
 
-| Font | Source | Variable | Role |
-|---|---|---|---|
-| DM Sans | Google Fonts | `--font-display` / `font-display` | Headings, name, titles |
-| Inter | Google Fonts | `--font-body` / `font-body` | Body text, labels, code |
+| Font | Variable | Role |
+|---|---|---|
+| DM Sans | `--font-display` / `font-display` | Headings, wordmark, skill terms |
+| Inter | `--font-body` / `font-body` | Body text, links, buttons |
+| JetBrains Mono | `--font-mono` / `font-mono` | Eyebrows, meta, dates, numerals, tags |
 
-**Rule:** Big and expressive → DM Sans. Small and precise → Inter.
+**Rule:** big and expressive → DM Sans. Reading → Inter. Small, precise and
+labelling → JetBrains Mono.
 
 ### Type Scale
 
-| Name | Font | Size | Weight | Line Height | Use |
+Every role is a named token carrying its own size, line-height and tracking — so
+one class sets all three. **Never write an arbitrary size.**
+
+| Class | Family | Size | Weight | Line height | Tracking |
 |---|---|---|---|---|---|
-| Display | DM Sans | 56–64px (`text-6xl`) | 700 | 1.1 | Hero name |
-| H1 | DM Sans | 36–40px (`text-4xl`) | 600 | 1.2 | Page titles |
-| H2 | DM Sans | 24–28px (`text-2xl`) | 600 | 1.3 | Section headings |
-| H3 | DM Sans | 18–20px (`text-xl`) | 500 | 1.4 | Sub-sections, project titles |
-| Body | Inter | 15–16px (`text-base`) | 400 | 1.6 | Paragraphs |
-| Small | Inter | 12–13px (`text-sm`) | 400 | 1.5 | Captions, metadata, dates |
-| Label | Inter | 11–12px (`text-xs`) | 500 | 1.4 | Tags, badges, stack pills |
-| Code | Inter | 13–14px (`text-sm`) | 400 | 1.6 | Inline code |
+| `text-hero` | DM Sans | `clamp(36px, 5.6vw, 66px)` | 700 | 1.06 | -0.04em |
+| `text-footer-head` | DM Sans | `clamp(30px, 4.6vw, 48px)` | 700 | 1.05 | -0.04em |
+| `text-section` | DM Sans | `clamp(24px, 3vw, 32px)` | 600 | — | -0.03em |
+| `text-project` | DM Sans | `clamp(22px, 2.6vw, 30px)` | 600 | — | -0.03em |
+| `text-quote` | DM Sans | `clamp(22px, 3vw, 30px)` | 500 | 1.32 | -0.025em |
+| `text-wordmark` | DM Sans | 22px | 700 | — | -0.04em |
+| `text-post-title` | DM Sans | 21px | 500 | 1.3 | -0.025em |
+| `text-wordmark-sm` | DM Sans | 17px | 700 | — | -0.04em |
+| `text-skill-term` | DM Sans | 17px | 600 | — | — |
+| `text-lede` | Inter | 18.5px | 400 | 1.6 | — |
+| `text-footer-lede` | Inter | 17px | 400 | 1.6 | — |
+| `text-body` | Inter | 16.5px | 400 | 1.65 | — |
+| `text-about` | Inter | 16.5px | 400 | 1.7 | — |
+| `text-about-sub` | Inter | 16px | 400 | 1.65 | — |
+| `text-skill-value` | Inter | 15.5px | 400 | 1.7 | — |
+| `text-post-desc` | Inter | 15.5px | 400 | 1.6 | — |
+| `text-where` | Inter | 15.5px | 400 | 1.55 | — |
+| `text-fact` | Inter | 15px | 400 | 1.55 | — |
+| `text-nav` | Inter | 14.5px | 400 | — | — |
+| `text-note` | Inter | 14.5px | 400 | 1.6 | — |
+| `text-link` | Inter | 14px | 400 | — | — |
+| `text-button` | Inter | 13px | 500 | — | uppercase + `tracking-tag` |
+| `text-date` | JetBrains Mono | 11.5px | 400 | — | — |
+| `text-meta` | JetBrains Mono | 11px | 400 | — | per role, below |
+| `text-tag` | JetBrains Mono | 10.5px | 400 | — | per role, below |
+
+Sizes repeat at 16.5px and 15.5px with **different line heights** — that's
+deliberate, not duplication. Pick by role, not by number.
+
+### Mono tracking
+
+Letter-spacing varies by what the mono text is doing:
+
+| Class | Value | Used for |
+|---|---|---|
+| `tracking-tag` | 0.06em | Stack tags, button labels |
+| `tracking-pill` | 0.08em | The "open to work" pill, copyright |
+| `tracking-meta` | 0.1em | Section meta, fact terms, footer labels |
+| `tracking-kicker` | 0.12em | Project kickers (`01 / PROFESSIONAL`) |
+| `tracking-eyebrow` | 0.14em | The hero eyebrow |
+
+### Wordmark
+
+`Joe` in DM Sans 700 at `-0.04em`, followed by a full stop in `accent`. Nav at
+22px, footer at 17px. **The stop is never dropped and never recoloured.** It counts
+against the four-accent budget in both places. Rendered by `ui/Wordmark`.
 
 ---
 
 ## Spacing & Layout
 
-### Max widths
+### Measures
 
-| Context | Max width |
-|---|---|
-| About section text | 640–720px (`max-w-2xl` or `max-w-3xl`) |
-| Blog post body | 65–75 character line length (`max-w-prose`) |
-| Section inner content | `max-w-6xl` with `mx-auto` |
+All named tokens — use `max-w-*`, never a raw `ch` or `px` value.
 
-### Section padding
+| Token | Value | Holds |
+|---|---|---|
+| `max-w-page` | 1120px | Every section's inner content |
+| `max-w-hero-head` | 24ch | The hero h1 |
+| `max-w-hero-lede` | 46ch | The hero lede |
+| `max-w-quote` | 26ch | The About pull quote |
+| `max-w-quote-sub` | 46ch | The paragraph under the quote |
+| `max-w-prose` | 54ch | Project body paragraphs |
+| `max-w-prose-wide` | 58ch | About body paragraphs |
+| `max-w-footer-lede` | 42ch | The footer paragraph |
+| `max-w-post-desc` | 50ch | Writing row descriptions |
 
-Sections use generous vertical padding. Minimum `py-24` (`6rem`). Hero is `min-h-screen`.
-- **Section borders** — a single 1px `ink-100` border-top on each section that sits on a
-  parchment background. No border needed on ink sections, the background contrast is enough.
+### Rhythm
 
-### Grid
+| Token | Value | Use |
+|---|---|---|
+| `gutter` | `clamp(20px, 4vw, 56px)` | Page side padding — **every section** |
+| `section` | `clamp(56px, 8vw, 96px)` | Section vertical padding |
+| `hero-top` | `clamp(60px, 10vw, 128px)` | Hero top padding |
+| `hero-bottom` | `clamp(52px, 8vw, 88px)` | Hero bottom padding |
+| `hero-row` | `clamp(32px, 5vw, 52px)` | Above the hero's two-column row |
+| `entry` | `clamp(52px, 7vw, 92px)` | Between project entries |
+| `entry-col` | `clamp(28px, 4vw, 56px)` | Inside a project entry |
+| `pair-col` | `clamp(28px, 5vw, 64px)` | Hero and About column gap |
+| `footer-top` | `clamp(56px, 8vw, 92px)` | Footer top padding |
+| `footer-col` | `clamp(32px, 5vw, 72px)` | Footer column gap |
+| `bottom-bar` | `clamp(40px, 6vw, 72px)` | Above the footer bottom bar |
+| `nav-gap` | `clamp(16px, 2.6vw, 30px)` | Between nav links |
 
-Skills section: `grid-cols-1 md:grid-cols-2 gap-8`
-Projects section: `grid-cols-1 md:grid-cols-3 gap-8`
+Values that land on Tailwind v4's numeric spacing scale use it directly —
+`py-1.75` (7px), `gap-4.5` (18px), `gap-5.5` (22px), `min-w-7.5` (30px),
+`px-6.5 py-3.75` (26/15px). Don't invent a token for something the scale already
+expresses.
+
+### Grids
+
+Every two-column block is `auto-fit` with a `minmax` floor, so it collapses to one
+column with **no media queries**. Declared as `@utility` classes because the floor
+differs per block:
+
+| Class | Floor | Used by |
+|---|---|---|
+| `grid-pair-hero` | 290px | Hero lede / buttons |
+| `grid-pair-entry` | 300px | Project entries, About |
+| `grid-pair-contact` | 280px | Footer |
+| `grid-pair-skills` | 260px | Skills rows |
+| `grid-pair-post` | 240px | Writing rows |
+| `grid-facts` | `96px 1fr` | Project fact lists |
 
 ---
 
 ## Visual Rules
 
-- **No gradients.** Flat backgrounds only.
-- **No decorative borders.** Borders only serve structure.
-- **No drop shadows** unless extremely subtle (0–2px, low opacity) on project mockup images.
-- **No icon libraries.** Text and typography carry the page.
-- **Subtle grain texture** — CSS noise overlay on parchment sections only. Implementation:
-  add a `::before` pseudo-element to parchment section wrappers with
-  `background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' stitchTiles='stitch'/></filter><rect width='200' height='200' filter='url(%23n)' opacity='0.4'/></svg>")`,
-  `opacity: 0.03`, `pointer-events: none`, `position: absolute`, `inset: 0`.
-  Parchment sections only, never on ink sections.
-- **Glassmorphism** — the centered floating nav pill only. `backdrop-blur`, `surface` at 80% opacity, hairline border. One place. Nowhere else.
-- **Alignment is everything.** Everything on a grid. Nothing floating.
-- **One focal point per section.** One heading. One CTA. One accent. Hierarchy, not noise.
+- **No gradients. No shadows.** Flat only, in both modes.
+- **Corner radius is 2px everywhere** — `rounded-brand`. No large radii.
+- **Borders are 1px `hairline`**, except section heads, which sit under a **2px
+  solid `on-surface`** rule.
+- **No glassmorphism.** The floating nav pill is gone; the nav is a flat bar with a
+  hairline bottom border.
+- **No grain texture.** Dropped with the parchment palette.
+- **Screenshots use `object-contain`, not `cover`**, on a `shot-bed` ground at
+  `aspect-shot` (16/10). The screenshots have different aspect ratios and cover
+  crops them badly.
+- **Hairlines on rows, not containers.** A container background showing through a
+  grid `gap` leaves a visible plate whenever `auto-fit` resolves to a column count
+  that doesn't divide the row count. Put the border on the row.
+- **Alignment is everything.** Left rail, everything on the 1120px measure.
 
 ---
 
-## Component Visual Specs
+## Component Specs
 
-### CTA Button
+All of these exist as components — use them rather than re-deriving the classes.
 
-```tsx
-// Default state
-className="bg-ink-900 text-parchment-200 font-body font-medium px-6 py-3 rounded-md transition-colors duration-200"
-
-// Hover state
-className="hover:bg-gold-600 hover:text-parchment-100"
-```
-
-### Availability Badge
+### Wordmark — `ui/Wordmark`
 
 ```tsx
-// Small gold pulsing dot + label
-<span className="flex items-center gap-2 text-xs font-body font-medium text-gold-600">
-  <span className="w-2 h-2 rounded-full bg-gold-600 animate-pulse" />
-  Open to work
-</span>
+<Wordmark size="nav" />     // 22px, in the nav
+<Wordmark size="footer" />  // 17px, in the footer bottom bar
 ```
 
-### Stack Tag (project skill pills)
+### Section head — `ui/SectionHead`
+
+Heading, a hairline that eats the remaining width, then optional mono meta. A 2px
+`on-surface` rule sits above it on light sections; the dark band omits it, because
+the background change already separates.
 
 ```tsx
-className="text-xs font-body font-medium bg-ink-800 text-parchment-200 px-3 py-1 rounded-full"
+<SectionHead title="Selected work" meta="THREE PROJECTS" />
+<SectionHead title="Skills" meta="SORTED HONESTLY" tone="alt" />
 ```
 
-### Section Label (above section headings)
+### Buttons — `ui/ButtonLink`
 
 ```tsx
-className="text-xs font-body font-medium uppercase tracking-widest text-gold-600"
+<ButtonLink href="/#work" variant="primary">See the work</ButtonLink>
+<ButtonLink href={SITE.cvPath} variant="secondary" external>Download CV</ButtonLink>
 ```
 
-### Nav Link
+- **primary** — `bg-accent` / `text-on-accent`, hover `accent-hover`. **This is one
+  of the four violet elements.** One per page.
+- **secondary** — 1px `on-surface` border, transparent fill; inverts to
+  `bg-on-surface` / `text-surface` on hover.
+- `size="roomy"` (26/15px) for the footer email button; default is 24/14px.
+
+### Text link — `ui/TextLink`
+
+A hairline under the text; both text and border go `accent` on hover. `size="nav"`
+is 14.5px muted (hero socials), `size="link"` is 14px ink (project repo links).
+
+### Status pill — `ui/Badge`
+
+1px `hairline` border, 2px radius, a **black** 6px dot, mono 10.5px
+`tracking-pill` label.
 
 ```tsx
-// Default
-className="text-sm font-body font-medium text-ink-600 hover:text-ink-900 transition-colors duration-150"
-
-// On dark nav background
-className="text-sm font-body font-medium text-parchment-400 hover:text-parchment-100 transition-colors duration-150"
+<Badge>OPEN TO WORK</Badge>
 ```
+
+### Stack tag
+
+Mono 10.5px `tracking-tag`, `on-surface-muted`, 1px `hairline` border, 2px radius,
+`px-2.5 py-1.25`. Inline in `sections/ProjectEntry`.
+
+---
+
+## Interactions
+
+- **Transitions:** `colors` only, 150ms, default easing. No transforms, no lifts,
+  no shadow changes.
+- **Hover:** nav links `on-surface-muted` → `on-surface`. Primary button → 
+  `accent-hover`. Outlined buttons invert. Text links → `accent`. Writing rows fill
+  `row-hover`.
+- **Reveals:** `ui/Reveal` and `ui/Stagger` (ADR-012). Opacity plus a small Y
+  translate, once. `useReducedMotion` renders the resting state with no animation.
+- **Scroll progress:** 2px `on-surface` bar, `ScrollProgress` in the root layout.
+- **Responsive:** every grid is `auto-fit` with a `minmax` floor, so there are no
+  media queries and no fixed widths or heights. Check 360, 768 and 1440.
 
 ---
 
 ## Tailwind Token Reference (v4)
 
-We use **Tailwind v4**, which is configured in CSS, not JavaScript. There is no
-`tailwind.config.js`. Tokens are declared in a `@theme` block in
-`src/app/globals.css`, and Tailwind generates the matching utilities
-automatically — `--color-gold-600` produces `bg-gold-600`, `text-gold-600`,
-`border-gold-600`; `--font-display` produces `font-display`. The token *names*
-are identical to the old config, so every class in this doc works unchanged.
+Tokens are declared in `@theme` blocks in `src/app/globals.css` — there is no
+`tailwind.config.js` (ADR-004). `--color-accent` produces `bg-accent` /
+`text-accent` / `border-accent`; `--text-hero` produces `text-hero` carrying its
+line-height and tracking; `--container-prose` produces `max-w-prose`;
+`--spacing-section` produces `py-section` / `gap-section`; `--radius-brand`
+produces `rounded-brand`; `--aspect-shot` produces `aspect-shot`.
 
-Set this up in step 1 before building anything. See ADR-004 in
-`docs/decisions.md` for why we moved off the v3 JS config.
+Custom multi-property utilities (the `auto-fit` grids) use `@utility`.
 
-```css
-/* src/app/globals.css */
-@import "tailwindcss";
-@plugin "@tailwindcss/typography";
-
-@theme {
-  /* Ink — warm blacks and greys */
-  --color-ink-50:  #F5F3F0;
-  --color-ink-100: #E0DDD8;
-  --color-ink-200: #B8B4AE;
-  --color-ink-400: #888480;
-  --color-ink-600: #555250;
-  --color-ink-800: #2E2C2A;
-  --color-ink-900: #1A1A18;
-
-  /* Parchment — warm off-whites */
-  --color-parchment-50:  #FDFBF7;
-  --color-parchment-100: #FAF6EE;
-  --color-parchment-200: #F2EBD9;
-  --color-parchment-300: #E8DFC8;
-  --color-parchment-400: #D8CDB0;
-  --color-parchment-600: #C0B090;
-  --color-parchment-800: #8A7A60;
-
-  /* Gold — accent, use sparingly */
-  --color-gold-50:  #FDF4E8;
-  --color-gold-100: #F5DFB0;
-  --color-gold-200: #E8C070;
-  --color-gold-400: #D4A853;
-  --color-gold-600: #C8924A;
-  --color-gold-800: #A06A28;
-  --color-gold-900: #704A18;
-
-  /* Fonts — wired to the next/font CSS variables set in layout.tsx */
-  --font-display: var(--font-dm-sans), sans-serif;
-  --font-body:    var(--font-inter), sans-serif;
-}
-```
-
-The `@tailwindcss/typography` plugin is loaded via `@plugin` (the v4 way) and
-applies to the blog post body only. The `--font-*` tokens point at the CSS
-variables that `next/font` generates in `layout.tsx`, so the fonts stay
-self-hosted and optimized rather than pulled from a `<link>`.
+**Read `src/app/globals.css` for the authoritative values.** This document
+describes the system; that file *is* it.
