@@ -28,12 +28,12 @@ export function SiteFooter() {
         <div className="grid grid-pair-contact items-start gap-footer-col">
           <div>
             <h2 className="mb-4.5 font-display text-footer-head font-bold text-on-surface">
-              Tell me what&apos;s broken.
+              Get in touch.
             </h2>
             <p className="mb-6.5 max-w-footer-lede font-body text-footer-lede text-on-surface-muted">
-              I&apos;m open to full-stack engineering roles, interesting
-              products, and problems worth solving. Remote or Ghana-based. Write
-              to me directly.
+              I&apos;m open to full-stack engineering roles, remote or
+              Ghana-based. If you&apos;re hiring, or you just want to talk about
+              something you&apos;re building, write to me directly.
             </p>
             <ButtonLink
               href={`mailto:${EMAIL}`}
